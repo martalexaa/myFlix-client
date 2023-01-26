@@ -7,7 +7,7 @@ export const MainView = () => {
   useEffect(() => {
     fetch("https://martalexa-myflix.onrender.com/movies")
       .then((response) => response.json())
-      .then((data) => {
+      .then((data) => { 
         const moviesFromApi = data.map((movie) => {
           return {
             id: movie._id,
