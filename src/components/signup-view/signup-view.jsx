@@ -16,7 +16,7 @@ export const SignupView = () => {
             Birthday: birthday
         };
 
-        fetch("URL", {
+        fetch("https://martalexa-myflix.onrender.com/users", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -61,6 +61,4 @@ export const SignupView = () => {
         </label>
         <button type="submit">Submit</button>
     </form>
-  )
-
-}
+  )};

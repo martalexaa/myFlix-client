@@ -1,18 +1,29 @@
 import { useState, useEffect } from "react";
+
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser? storedUser : null);
+  const [token, setToken] = useState(storedToken? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
   //fetch movies from the database
   useEffect(() => {
-    fetch("https://martalexa-myflix.onrender.com/movies")
+
+    if(!token) {
+      return;
+    }
+
+    fetch("https://martalexa-myflix.onrender.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
       .then((response) => response.json())
       .then((data) => { 
         const moviesFromApi = data.map((movie) => {
@@ -27,8 +38,13 @@ export const MainView = () => {
           };
         });
         setMovies(moviesFromApi);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  }, []);
+  }, [token]);
+
+  //by passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
 
    //if the user is not logged in, display LoginView or SignupView
    if (!user) {
@@ -68,7 +84,7 @@ export const MainView = () => {
         />
       ))}
 
-      <button onClick={() => { setUser(null); }}>Logout</button>
+      <button onClick={() => { setUser(null); setToken(null); }}>Logout</button>
     </div>
   );
 };

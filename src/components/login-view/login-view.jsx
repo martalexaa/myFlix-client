@@ -4,29 +4,38 @@ export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-
     const handleSubmit = (event) => {
         
         // this prevents the default behavior of the form which is to reload the entire page
         event.preventDeafult();
 
         const data = {
-            access: username, 
-            secret: password
+          Username: username,
+          Password: password
         };
-
-//call the onLoggedIn prop when the login request succeeds
-    fetch("https://martalexa-myflix.onrender.com/login", {
-        method: "POST",
-        body: JSON.stringify(data)
-    }).then((response) => {
-        if (response.ok) {
-            onLoggedIn(username);
-        } else {
-            alert("Login failed")
-        }
-    });
-};
+    
+        fetch("https://martalexa-myflix.onrender.com/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data) // response with JSON object
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Login response: ", data);
+            if (data.user) {
+              localStorage.setItem("user", JSON.stringify(data.user)); // put user and token in local storage to stay logged in
+              localStorage.setItem("token", data.token);
+              onLoggedIn(data.user, data.token);  //send user and token to mainview
+            } else {
+              alert("No such user");
+            }
+          })
+          .catch((e) => {
+            alert("Something went wrong");
+          });
+        };
 
 return (
     <form onSubmit={handleSubmit}>
@@ -52,5 +61,4 @@ return (
       </label>
       <button type="submit">Submit</button>
     </form>
-  );
-};
+  )};
