@@ -16,9 +16,7 @@ export const LoginView = ({ onLoggedIn }) => {
     
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data) // response with JSON object
         })
           .then((response) => response.json())
@@ -46,7 +44,7 @@ return (
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="4"
+          minLength="3"
           maxLength="8"
         />
       </label>
