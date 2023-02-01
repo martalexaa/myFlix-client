@@ -73,6 +73,8 @@ export const MainView = () => {
     return <div>The list is empty!</div>;
   }
   return (
+    <>
+    <h3>Movies</h3>
     <div>
       {movies.map((movie) => (
         <MovieCard
@@ -81,10 +83,10 @@ export const MainView = () => {
           onMovieClick={(newSelectedMovie) => {
             setSelectedMovie(newSelectedMovie);
           }}
-        />
-      ))}
-
-      <button onClick={() => { setUser(null); setToken(null); }}>Logout</button>
-    </div>
+          />
+        ))}
+      </div>
+      <button onClick={() => { setUser(null); setToken(null) }}>Logout</button>
+    </>
   );
 };

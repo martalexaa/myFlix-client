@@ -5,16 +5,9 @@ export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
-        
-        // this prevents the default behavior of the form which is to reload the entire page
-        event.preventDeafult();
+        const handleSubmit = (event) => {event.preventDefault(); // prevent reloading the entire page
+        const data = { Username: username, Password: password };
 
-        const data = {
-          Username: username,
-          Password: password
-        };
-    
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
