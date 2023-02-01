@@ -1,3 +1,4 @@
+import React from "react";
 import {useState} from "react";
 
 export const LoginView = ({ onLoggedIn }) => {
@@ -35,28 +36,28 @@ export const LoginView = ({ onLoggedIn }) => {
           });
         };
 
-return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          minLength="3"
-          maxLength="8"
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  )};
+        return (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Username:
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                minLength="5"
+              />
+            </label>
+            <label>
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        );
+      };
