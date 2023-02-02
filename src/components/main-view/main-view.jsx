@@ -4,6 +4,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { Row, Button, Col } from "react-bootstrap";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -47,9 +48,10 @@ export const MainView = () => {
   //by passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
 
    //if the user is not logged in, display LoginView or SignupView
-   if (!user) {
-    return (
+   return (
+    <Row className="justify-content-md-center"> {!user ? (
       <>
+      <Col md={5}>
         <LoginView
           onLoggedIn={(user, token) => {
             setUser(user);
@@ -58,33 +60,33 @@ export const MainView = () => {
         />
         or
         <SignupView />
+        </Col>
       </>
-    );
-  }
-
-  if (selectedMovie) {
-    return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-    );
-  }
-
-//if there is no movie in the list, show "the list is empty", if there are movies loaded from the database, show the movie cards(name with click function and key)
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
-  return (
-    <div>
+     ) : selectedMovie ? (
+      <>
+      <Col md={8}>
+      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)}
+      />
+      </Col>
+      </>
+     ) : movies.length === 0 ? (
+      <div>The list is empty!</div>
+     ) : (
+      <>
       {movies.map((movie) => (
+        <Col className="mb-5" key={movie.id} md={3}>
         <MovieCard
-          key={movie.id}
           movie={movie}
           onMovieClick={(newSelectedMovie) => {
             setSelectedMovie(newSelectedMovie);
           }}
         />
-      ))}
-
-      <button onClick={() => { setUser(null); setToken(null); }}>Logout</button>
-    </div>
-  );
+        </Col>
+     )
+     )}
+     <Button onClick={() => { setUser(null); setToken(null); localStorage.clear() }}>Logout</Button>
+    </>
+     )}
+     </Row>
+ );
 };
