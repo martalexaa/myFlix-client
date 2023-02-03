@@ -31,6 +31,7 @@ export const LoginView = ({ onLoggedIn }) => {
           });
         };
 
+
         return (
           <Form onSubmit={handleSubmit}>
             <h3>Log in</h3>
