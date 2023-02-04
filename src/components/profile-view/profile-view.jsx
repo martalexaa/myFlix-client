@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { MovieCard } from '../movie-card/movie-card';
 
 
-  export const ProfileView = ( ) => {
+  export const ProfileView = ({ user, movies }) => {
     const [userData, setUserData] = useState({});
 
 useEffect(() => {
@@ -10,8 +11,10 @@ useEffect(() => {
       setUserData(JSON.parse(storedUser));
     }
   }, []);
+  
 
-  //let favMoviesList = movies.filter((m) => userData.FavoriteMovies.includes(m.id));
+  const favMovies = userData.FavoriteMovies;
+  const favMoviesList = movies.filter((m) => favMovies.includes(m.id));
 
     
     return (
@@ -24,7 +27,20 @@ useEffect(() => {
         <p>Email: {userData.Email} </p>
         <p>Birthday: {userData.Birthday}</p>
         <br />
-        <h3>My Favorite Movies: {userData.FavoriteMovies} </h3>
+        <h3>My Favorite Movies: </h3>
+        
+        {favMoviesList.length === 0 ? (
+                  <div>The list is empty!</div>
+                ) : (
+                  <>
+                    {favMoviesList.map((movie) => (
+                      <div key={movie.id}>
+                        <MovieCard movie={movie}  user={user}/>
+                      </div>
+                    ))}
+                  </>
+                )}
+
         <h3>Update my data:</h3>
       </div>
       </>
