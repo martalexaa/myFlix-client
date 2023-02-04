@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from '../movie-card/movie-card';
+import { UpdateForm } from './update-form';
 
   export const ProfileView = ({ user, movies }) => {
+
+    const storedUser = JSON.parse(localStorage.getItem('user'));
     const [userData, setUserData] = useState({});
 
 useEffect(() => {
@@ -43,7 +46,7 @@ useEffect(() => {
                   </>
                 )}
            <br/>
-        <h3>Update my data:</h3>
+        <UpdateForm />
       </div>
       </>
     );
