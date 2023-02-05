@@ -3,21 +3,35 @@ import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-export const UpdateForm = ({ }) => {
+export const UpdateForm = ({ storedToken, updatedUser }) => {
 
-  const storedToken = localStorage.getItem("token");
-  const [token] = useState(storedToken ? storedToken : null);
-  const storedUser = localStorage.getItem("user");
-  const [setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [birthday, setBirthday] = useState("");
+  const [username, setUsername] = useState(user.Username);
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState(user.Email);
+  const [birthday, setBirthday] = useState(user.Birthday);
 
-    const updateUser = (event) => {
+
+    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/${username}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((updatedUser) => {
+        if (updatedUser) {
+          setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+    const handleSubmit = (event) => {
       event.preventDefault();
-    
       const data = {
         Username: username,
         Password: password,
@@ -26,33 +40,33 @@ export const UpdateForm = ({ }) => {
       };
     
       console.log(data);
-    
-      fetch(`https://martalexa-myflix.onrender.com/${username}`, {
-        method: "PUT",
+      
+      fetch(
+        `https://martalexa-myflix.onrender.com/${updatedUser.Username}`,
+      {
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          alert('Changes saved');
+          updateUser(username);
+        } else {
+          alert('Something went wrong');
         }
       })
-        .then(updateUser => updateUser.json())
-        .then(response => {
-          console.log(response);
-          if (response) {
-            localStorage.clear();
-            window.location.reload();
-            alert("Account successfully updated");
-          } else {
-            alert("Something went wrong");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    };    
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
         return (
-          <Form onSubmit={updateUser}>
+          <Form onSubmit={handleSubmit}>
             <h3>Update my data</h3>
           <Form.Group controlId="formUsername">
             <Form.Label>Username:</Form.Label>

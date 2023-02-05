@@ -46,7 +46,7 @@ useEffect(() => {
                   </>
                 )}
            <br/>
-        <UpdateForm />
+        <UpdateForm storedToken={storedToken} updatedUser={updatedUsers}/>
       </div>
       </>
     );
