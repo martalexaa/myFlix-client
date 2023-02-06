@@ -3,7 +3,8 @@
 import { Button } from 'react-bootstrap';
 
 export const DeleteUser = ({ storedToken, storedUser }) => {
-  const handleDeregister = () => {
+  
+  const handleDeregister = (username) => {
     const userWarning = confirm(
       `You are going to delete your account. All information will be lost and cannot be recovered. Are you sure?`
     );
@@ -35,7 +36,7 @@ export const DeleteUser = ({ storedToken, storedUser }) => {
   return (
       <div>
         <Button
-          onClick={() => handleDeregister(storedUser._id)}
+          onClick={() => handleDeregister(storedUser.Username)}
           className='delete-button'
           variant='danger'
         >

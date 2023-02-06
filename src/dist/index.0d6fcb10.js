@@ -46317,7 +46317,7 @@ const LoginView = ({ onLoggedIn  })=>{
         }).then((response)=>response.json()).then((data)=>{
             console.log("Login response: ", data);
             if (data.user) {
-                localStorage.setItem("user", JSON.stringify(data.user)); // put user and token in local storage to stay logged in
+                localStorage.setItem("user", JSON.stringify(data.user)); // save user and token in local storage to stay logged in
                 localStorage.setItem("token", data.token);
                 onLoggedIn(data.user, data.token); //send user and token to mainview
             } else alert("No such user");
@@ -46903,7 +46903,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
     const updateUser = (username)=>{
-        fetch(`https://martalexa-myflix.onrender.com/${username}`, {
+        fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -46926,7 +46926,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
             Birthday: birthday
         };
         console.log(data);
-        fetch(`https://martalexa-myflix.onrender.com/${username}`, {
+        fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -47099,7 +47099,7 @@ parcelHelpers.export(exports, "DeleteUser", ()=>DeleteUser);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactBootstrap = require("react-bootstrap");
 const DeleteUser = ({ storedToken , storedUser  })=>{
-    const handleDeregister = ()=>{
+    const handleDeregister = (username)=>{
         const userWarning = confirm(`You are going to delete your account. All information will be lost and cannot be recovered. Are you sure?`);
         userWarning === false ? alert("Great decision. Keep choosing your favorite movies") : fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
             method: "DELETE",
@@ -47117,18 +47117,18 @@ const DeleteUser = ({ storedToken , storedUser  })=>{
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-            onClick: ()=>handleDeregister(storedUser._id),
+            onClick: ()=>handleDeregister(storedUser.Username),
             className: "delete-button",
             variant: "danger",
             children: "Delete Account"
         }, void 0, false, {
             fileName: "src/components/profile-view/delete-user.jsx",
-            lineNumber: 37,
+            lineNumber: 38,
             columnNumber: 9
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/profile-view/delete-user.jsx",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 7
     }, undefined);
 };

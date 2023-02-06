@@ -9,11 +9,11 @@ export const deleteFavMovie = ({ user, movies }) => {
     
     const storedUser = JSON.parse(localStorage.getItem('user'));
 
-    const favoriteMovies = user.FavoriteMovies.map( favMovie => (
-        movies.find(movie => (movie._id === favMovie))
-    ));
-
     const handleDeleteFavMovie = (movieId) => {
+
+        const favoriteMovies = user.FavoriteMovies.map( favMovie => (
+            movies.find(movie => (movie._id === favMovie))
+        ));
 
         fetch(
             `https://martalexa-myflix.onrender.com/users/${storedUser._id}/${movie.title}`,
@@ -40,7 +40,7 @@ export const deleteFavMovie = ({ user, movies }) => {
 
     return (
         <>
-        <Button variant='primary'> Delete from favorites </Button>
+        <Button variant='primary' onClick={() => handleDeleteFavMovie(movieId)}> Delete from favorites </Button>
         </>
     )
 }

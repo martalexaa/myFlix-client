@@ -19,7 +19,7 @@ export const LoginView = ({ onLoggedIn }) => {
           .then((data) => {
             console.log("Login response: ", data);
             if (data.user) {
-              localStorage.setItem("user", JSON.stringify(data.user)); // put user and token in local storage to stay logged in
+              localStorage.setItem("user", JSON.stringify(data.user)); // save user and token in local storage to stay logged in
               localStorage.setItem("token", data.token);
               onLoggedIn(data.user, data.token);  //send user and token to mainview
             } else {

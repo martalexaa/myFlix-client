@@ -16,7 +16,7 @@ export const UpdateForm = ({ storedToken, storedUser }) => {
   const [birthday, setBirthday] = useState(user.Birthday);
 
 
-    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/${username}`, {
+    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
@@ -44,7 +44,7 @@ export const UpdateForm = ({ storedToken, storedUser }) => {
       console.log(data);
       
       fetch(
-        `https://martalexa-myflix.onrender.com/${username}`,
+        `https://martalexa-myflix.onrender.com/users/${username}`,
       {
         method: 'PUT',
         body: JSON.stringify(data),
