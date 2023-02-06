@@ -5,10 +5,11 @@ import Form from "react-bootstrap/Form";
 
 export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState(""); //for security reasons the password should be hashed here too!
 
         const handleSubmit = (event) => {event.preventDefault(); // prevent reloading the entire page
         const data = { Username: username, Password: password };
+
 
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",

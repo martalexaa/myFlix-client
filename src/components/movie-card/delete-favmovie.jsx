@@ -5,18 +5,17 @@ import Button from "react-bootstrap/Button";
 
 export const deleteFavMovie = ({ user, movies }) => {
 
-    const storedToken = localStorage.getItem("token");
-    
+    const storedToken = localStorage.getItem("token"); 
     const storedUser = JSON.parse(localStorage.getItem('user'));
 
-    const handleDeleteFavMovie = (movieId) => {
+    const handleDeleteFavMovie = (movieTitle) => {
 
         const favoriteMovies = user.FavoriteMovies.map( favMovie => (
             movies.find(movie => (movie._id === favMovie))
         ));
 
         fetch(
-            `https://martalexa-myflix.onrender.com/users/${storedUser._id}/${movie.title}`,
+            `https://martalexa-myflix.onrender.com/users/${storedUser._id}/${movieTitle}`,
             {
               method: 'DELETE',
               headers: {
@@ -40,7 +39,7 @@ export const deleteFavMovie = ({ user, movies }) => {
 
     return (
         <>
-        <Button variant='primary' onClick={() => handleDeleteFavMovie(movieId)}> Delete from favorites </Button>
+        <Button variant='danger' favoriteMovies={favoriteMovies}  onClick={() => handleDeleteFavMovie(movieId)}> Delete from favorites </Button>
         </>
     )
 }

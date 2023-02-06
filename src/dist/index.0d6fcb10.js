@@ -27368,6 +27368,7 @@ var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactBootstrap = require("react-bootstrap");
 var _reactRouterDom = require("react-router-dom");
+var _addFavmovie = require("./add-favmovie");
 var _movieCardScss = require("./movie-card.scss");
 const MovieCard = ({ movie  })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
@@ -27380,7 +27381,7 @@ const MovieCard = ({ movie  })=>{
                 src: movie.image
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 11,
+                lineNumber: 12,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
@@ -27389,7 +27390,7 @@ const MovieCard = ({ movie  })=>{
                         children: movie.title
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 13,
+                        lineNumber: 14,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
@@ -27399,7 +27400,7 @@ const MovieCard = ({ movie  })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 14,
+                        lineNumber: 15,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -27409,31 +27410,29 @@ const MovieCard = ({ movie  })=>{
                             children: "Open"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 16,
+                            lineNumber: 17,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 15,
+                        lineNumber: 16,
                         columnNumber: 9
                     }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                        children: "Love it"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _addFavmovie.AddFavMovie), {}, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 18,
+                        lineNumber: 19,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 12,
+                lineNumber: 13,
                 columnNumber: 11
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 10,
+        lineNumber: 11,
         columnNumber: 7
     }, undefined);
 };
@@ -27454,7 +27453,7 @@ $RefreshReg$(_c, "MovieCard");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo","prop-types":"7wKI2","react-bootstrap":"3AD9A","./movie-card.scss":"d6HH4","react":"21dqq","react-router-dom":"9xmpe"}],"hpHEt":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo","prop-types":"7wKI2","react-bootstrap":"3AD9A","./movie-card.scss":"d6HH4","react":"21dqq","react-router-dom":"9xmpe","./add-favmovie":"hW8di"}],"hpHEt":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -46142,7 +46141,63 @@ function getTargetMatch(matches, location) {
     return pathMatches[pathMatches.length - 1];
 } //#endregion
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt"}],"ggaUx":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt"}],"hW8di":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$83f3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$83f3.prelude(module);
+
+try {
+//add a new movie to user's favorite movies array: app.post('/users/:Username/movies/:MovieID') 
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AddFavMovie", ()=>AddFavMovie);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+const AddFavMovie = ({})=>{
+    const handleAddFavMovie = (movieId1)=>{
+        const storedToken = localStorage.getItem("token");
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        fetch(`https://martalexa-myflix.onrender.com/users/${storedUser._id}/${movieId1}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                "Content-Type": "application/json"
+            }
+        }).then((response)=>{
+            if (response.ok) {
+                const updatedUser = response.data;
+                alert("Movie successfully added to favorites");
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                window.location.reload();
+            } else alert("Something went wrong");
+        }).catch((e)=>console.log(e));
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+            variant: "primary",
+            onClick: ()=>handleAddFavMovie(movieId),
+            children: " Add to favorites "
+        }, void 0, false, {
+            fileName: "src/components/movie-card/add-favmovie.jsx",
+            lineNumber: 38,
+            columnNumber: 9
+        }, undefined)
+    }, void 0, false);
+};
+_c = AddFavMovie;
+var _c;
+$RefreshReg$(_c, "AddFavMovie");
+
+  $parcel$ReactRefreshHelpers$83f3.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo"}],"ggaUx":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46301,7 +46356,7 @@ var _s = $RefreshSig$();
 const LoginView = ({ onLoggedIn  })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)("");
-    const [password, setPassword] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)(""); //for security reasons the password should be hashed here too!
     const handleSubmit = (event)=>{
         event.preventDefault(); // prevent reloading the entire page
         const data = {
@@ -46332,7 +46387,7 @@ const LoginView = ({ onLoggedIn  })=>{
                 children: "Log in"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 37,
+                lineNumber: 38,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46342,7 +46397,7 @@ const LoginView = ({ onLoggedIn  })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 39,
+                        lineNumber: 40,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46353,13 +46408,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         minLength: "3"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 40,
+                        lineNumber: 41,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 38,
+                lineNumber: 39,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46369,7 +46424,7 @@ const LoginView = ({ onLoggedIn  })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 50,
+                        lineNumber: 51,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46379,13 +46434,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 51,
+                        lineNumber: 52,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 49,
+                lineNumber: 50,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -46394,13 +46449,13 @@ const LoginView = ({ onLoggedIn  })=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 58,
+                lineNumber: 59,
                 columnNumber: 11
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 11
     }, undefined);
 };
