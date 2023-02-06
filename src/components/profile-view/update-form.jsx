@@ -1,9 +1,11 @@
+// back-end endpoint to update user data app.put('/users/:Username')
+
 import React from "react";
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-export const UpdateForm = ({ storedToken, updatedUser }) => {
+export const UpdateForm = ({ storedToken, storedUser }) => {
 
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [user, setUser] = useState(storedUser ? storedUser : null);
@@ -42,7 +44,7 @@ export const UpdateForm = ({ storedToken, updatedUser }) => {
       console.log(data);
       
       fetch(
-        `https://martalexa-myflix.onrender.com/${updatedUser.Username}`,
+        `https://martalexa-myflix.onrender.com/${username}`,
       {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -66,6 +68,7 @@ export const UpdateForm = ({ storedToken, updatedUser }) => {
   };
 
         return (
+          <>
           <Form onSubmit={handleSubmit}>
             <h3>Update my data</h3>
           <Form.Group controlId="formUsername">
@@ -113,5 +116,6 @@ export const UpdateForm = ({ storedToken, updatedUser }) => {
             Submit
           </Button>
         </Form>
+       </>
       );
     };

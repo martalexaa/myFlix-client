@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from '../movie-card/movie-card';
 import { UpdateForm } from './update-form';
+import { DeleteUser } from './delete-user';
 
   export const ProfileView = ({ user, movies }) => {
+
+    const storedToken = localStorage.getItem("token");
 
     const storedUser = JSON.parse(localStorage.getItem('user'));
     const [userData, setUserData] = useState({});
@@ -46,7 +49,8 @@ useEffect(() => {
                   </>
                 )}
            <br/>
-        <UpdateForm storedToken={storedToken} updatedUser={updatedUsers}/>
+        <UpdateForm storedToken={storedToken} storedUser={storedUser}/>
+        <DeleteUser storedToken={storedToken} storedUser={storedUser}/>
       </div>
       </>
     );
