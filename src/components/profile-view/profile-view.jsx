@@ -6,8 +6,7 @@ import { DeleteUser } from './delete-user';
   export const ProfileView = ({ user, movies }) => {
 
     const storedToken = localStorage.getItem("token");
-
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedUser = localStorage.getItem("user");
     const [userData, setUserData] = useState({});
 
 useEffect(() => {
