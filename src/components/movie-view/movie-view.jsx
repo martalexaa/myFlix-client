@@ -4,7 +4,7 @@ import { Card, Button } from "react-bootstrap";
 
 export const MovieView = ({ movies }) => {
 
-  const { movieId } = useParams();
+  const { movieId } = useParams();  //the useParams hook extracts the movieId from the URL parameters (from the MainView: Route path="/movies/:movieId")
 
   const movie = movies.find((m) => m.id === movieId);
 

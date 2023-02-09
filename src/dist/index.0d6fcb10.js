@@ -46143,56 +46143,69 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$9f4f.prelude(module);
 
 try {
-//add a new movie to user's favorite movies array: app.post('/users/:Username/movies/:MovieID') 
+//add the new fav movie to the favmovie array stored in localstorage then...
+//add a new movie to user's favorite movies array in the API: app.post('/users/:Username/movies/:MovieID') 
 //delete a new movie to user's favorite movies array: app.delete('/users/:Username/movies/:MovieID')
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FavoriteButton", ()=>FavoriteButton);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-const FavoriteButton = ({ movie  })=>{
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    const favMovies = userData.FavoriteMovies ?? [];
-    const currentlyAFavorite = favMovies && favMovies.length !== 0 ? movies.filter((m)=>favMovies.includes(m.id)) : [];
-    let requestOptions = {
-        method: "",
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-    const toggleFavorite = ()=>{
-        if (!token) return;
-        if (currentlyAFavorite) {
-            requestOptions.method = "DELETE";
-            resultAlert = `${movie.title} is deleted from the list of favorites`;
-        } else {
-            requestOptions.method = "POST";
-            resultAlert = `${movie.title} is added to the list of favorites`;
-        }
-        fetch(`https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`, requestOptions).then((response)=>response.json()).then((data)=>{
-            setUser(data);
-            localStorage.setItem("user", JSON.stringify(data));
-            alert("Successfully added to/deleted from favorites");
-            window.location.reload();
-        }).catch((e)=>{
-            alert("Something went wrong");
+const FavoriteButton = ({ movie , user , token  })=>{
+    const addFavoriteMovie = async ()=>{
+        const favoriteMovie = await fetch(`https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
         });
+        const response = await favoriteMovie.json();
+        setUserFavoriteMovies(response.FavoriteMovies);
+        if (response) {
+            localStorage.setItem("user", JSON.stringify(response));
+            alert("Successfully added");
+            window.location.reload();
+        } else alert("Something went wrong");
+    };
+    const deleteFavoriteMovie = async ()=>{
+        const favoriteMovie = await fetch(`https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        const response = await favoriteMovie.json();
+        if (response) {
+            localStorage.setItem("user", JSON.stringify(response));
+            alert("Successfully deleted");
+            window.location.reload();
+        } else alert("Something went wrong");
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
-            variant: "primary",
-            onClick: ()=>toggleFavorite(),
-            children: " Favorite/Not favorite "
-        }, void 0, false, {
-            fileName: "src/components/movie-card/favorite-button.jsx",
-            lineNumber: 49,
-            columnNumber: 9
-        }, undefined)
-    }, void 0, false);
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                variant: "primary",
+                onClick: ()=>addFavoriteMovie,
+                children: " Favorite "
+            }, void 0, false, {
+                fileName: "src/components/movie-card/favorite-button.jsx",
+                lineNumber: 48,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                variant: "primary",
+                onClick: ()=>deleteFavoriteMovie,
+                children: " Not Favorite "
+            }, void 0, false, {
+                fileName: "src/components/movie-card/favorite-button.jsx",
+                lineNumber: 49,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true);
 };
 _c = FavoriteButton;
 var _c;
@@ -46203,7 +46216,7 @@ $RefreshReg$(_c, "FavoriteButton");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo"}],"ggaUx":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo"}],"ggaUx":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46220,7 +46233,7 @@ var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const MovieView = ({ movies  })=>{
     _s();
-    const { movieId  } = (0, _reactRouter.useParams)();
+    const { movieId  } = (0, _reactRouter.useParams)(); //the useParams hook extracts the movieId from the URL parameters (from the MainView: Route path="/movies/:movieId")
     const movie = movies.find((m)=>m.id === movieId);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
         bg: "dark",
@@ -46798,6 +46811,8 @@ var _react = require("react");
 var _movieCard = require("../movie-card/movie-card");
 var _updateForm = require("./update-form");
 var _deleteUser = require("./delete-user");
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
 const ProfileView = ({ user , movies  })=>{
     _s();
@@ -46808,12 +46823,39 @@ const ProfileView = ({ user , movies  })=>{
         const storedUser = localStorage.getItem("user");
         if (storedUser) setUserData(JSON.parse(storedUser));
     }, []);
-    //The code below defines two constants favMovies and favMoviesList. favMovies is assigned the value of userData.
-    //FavoriteMovies if it exists, or an empty array [] if it does not exist (using the "nullish coalescing operator" ??). 
-    //favMoviesList is then assigned a filtered list of movies from movies where the movie's id is included in favMovies. 
-    //If favMovies has a length of zero (favMovies.length !== 0), favMoviesList is assigned an empty array [].
     const favMovies = userData.FavoriteMovies ?? [];
     const favMoviesList = favMovies && favMovies.length !== 0 ? movies.filter((m)=>favMovies.includes(m.id)) : [];
+    const addFavoriteMovie = async ()=>{
+        const favoriteMovie = await fetch(`https://martalexa-myflix.onrender.com/users/${userData.Username}/movies/${movie.id}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                "Content-Type": "application/json"
+            }
+        });
+        const response = await favoriteMovie.json();
+        setUserFavoriteMovies(response.FavoriteMovies);
+        if (response) {
+            localStorage.setItem("user", JSON.stringify(response));
+            alert("Successfully added");
+            window.location.reload();
+        } else alert("Something went wrong");
+    };
+    const deleteFavoriteMovie = async ()=>{
+        const favoriteMovie = await fetch(`https://martalexa-myflix.onrender.com/users/${userData.Username}/movies/${movie.id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                "Content-Type": "application/json"
+            }
+        });
+        const response = await favoriteMovie.json();
+        if (response) {
+            localStorage.setItem("user", JSON.stringify(response));
+            alert("Successfully deleted");
+            window.location.reload();
+        } else alert("Something went wrong");
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46821,12 +46863,12 @@ const ProfileView = ({ user , movies  })=>{
                     children: "My profile"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 30,
+                    lineNumber: 66,
                     columnNumber: 5
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 29,
+                lineNumber: 65,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46838,7 +46880,7 @@ const ProfileView = ({ user , movies  })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 33,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -46849,7 +46891,7 @@ const ProfileView = ({ user , movies  })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 34,
+                        lineNumber: 70,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -46859,46 +46901,57 @@ const ProfileView = ({ user , movies  })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 35,
+                        lineNumber: 71,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 36,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
                         children: "My Favorite Movies: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 37,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, undefined),
                     favMoviesList.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: "The list is empty!"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 40,
+                        lineNumber: 76,
                         columnNumber: 19
                     }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-                        children: favMoviesList.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                                    movie: movie,
-                                    user: user
-                                }, void 0, false, {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 45,
-                                    columnNumber: 25
-                                }, undefined)
-                            }, movie.id, false, {
+                        children: favMoviesList.map((movie1)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
+                                        movie: movie1,
+                                        user: user
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 81,
+                                        columnNumber: 25
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                                        variant: "primary",
+                                        onClick: ()=>deleteFavoriteMovie,
+                                        children: " Not Favorite "
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 82,
+                                        columnNumber: 25
+                                    }, undefined)
+                                ]
+                            }, movie1.id, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 44,
+                                lineNumber: 80,
                                 columnNumber: 23
                             }, undefined))
                     }, void 0, false),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 50,
+                        lineNumber: 87,
                         columnNumber: 12
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _updateForm.UpdateForm), {
@@ -46906,7 +46959,7 @@ const ProfileView = ({ user , movies  })=>{
                         storedUser: storedUser
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 51,
+                        lineNumber: 88,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _deleteUser.DeleteUser), {
@@ -46914,13 +46967,13 @@ const ProfileView = ({ user , movies  })=>{
                         storedUser: storedUser
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 52,
+                        lineNumber: 89,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 32,
+                lineNumber: 68,
                 columnNumber: 7
             }, undefined)
         ]
@@ -46936,7 +46989,7 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","../movie-card/movie-card":"bwuIu","./update-form":"7yKw6","./delete-user":"fKFLs"}],"7yKw6":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"fEjuo","@parcel/transformer-js/src/esmodule-helpers.js":"hpHEt","../movie-card/movie-card":"bwuIu","./update-form":"7yKw6","./delete-user":"fKFLs","react-bootstrap/Button":"aPzUt"}],"7yKw6":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$33b0 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46965,12 +47018,14 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
     const updateUser = (username)=>{
         fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
+            method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>response.json()).then((updatedUser)=>{
             if (updatedUser) {
                 setUser(updatedUser);
+                console.log(updatedUser);
                 localStorage.setItem("user", JSON.stringify(updatedUser));
                 window.location.reload();
             }
@@ -47011,7 +47066,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                     children: "Update my data"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 73,
+                    lineNumber: 75,
                     columnNumber: 13
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47021,7 +47076,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             children: "Username:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 75,
+                            lineNumber: 77,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47032,13 +47087,13 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             minLength: "3"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 76,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 74,
+                    lineNumber: 76,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47048,7 +47103,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             children: "Password:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 86,
+                            lineNumber: 88,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47058,13 +47113,13 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 87,
+                            lineNumber: 89,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 85,
+                    lineNumber: 87,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47074,7 +47129,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             children: "Email:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 96,
+                            lineNumber: 98,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47084,13 +47139,13 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 97,
+                            lineNumber: 99,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 95,
+                    lineNumber: 97,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47100,7 +47155,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             children: "Birthday:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 106,
+                            lineNumber: 108,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47110,13 +47165,13 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 107,
+                            lineNumber: 109,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 105,
+                    lineNumber: 107,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -47125,13 +47180,13 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                     children: "Submit"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 115,
+                    lineNumber: 117,
                     columnNumber: 11
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/update-form.jsx",
-            lineNumber: 72,
+            lineNumber: 74,
             columnNumber: 11
         }, undefined)
     }, void 0, false);

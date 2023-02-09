@@ -1,51 +1,51 @@
-//add a new movie to user's favorite movies array: app.post('/users/:Username/movies/:MovieID') 
+//add the new fav movie to the favmovie array stored in localstorage then...
+//add a new movie to user's favorite movies array in the API: app.post('/users/:Username/movies/:MovieID') 
 //delete a new movie to user's favorite movies array: app.delete('/users/:Username/movies/:MovieID')
 
-import React from 'react';
 import Button from "react-bootstrap/Button";
 
-export const FavoriteButton = ({ movie }) => {
+export const FavoriteButton = ({ movie, user, token}) => {
 
-  const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user');
+const addFavoriteMovie = async() => {
+  const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`,
+  {      method: 'POST',
+         headers: {
+            Authorization: `Bearer ${token}`,
+                           'Content-Type': 'application/json',
+  }
+})
+  const response = await favoriteMovie.json()
+  setUserFavoriteMovies(response.FavoriteMovies)
+  if(response) {
+    localStorage.setItem('user', JSON.stringify(response));
+    alert('Successfully added')
+    window.location.reload();
+  } else {
+    alert('Something went wrong')
+  }
+}
 
-  const favMovies = userData.FavoriteMovies ?? [];
-  const currentlyAFavorite = favMovies && favMovies.length !== 0 ? movies.filter((m) => favMovies.includes(m.id)) : [];
-
-  let requestOptions = {
-    method: '',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const toggleFavorite = () => {
-
-    if (!token) return;
-
-    if (currentlyAFavorite) {
-      requestOptions.method = 'DELETE';
-      resultAlert = `${movie.title} is deleted from the list of favorites`;
-    } else {
-      requestOptions.method = 'POST';
-      resultAlert = `${movie.title} is added to the list of favorites`;
-    }  
-
-        fetch( `https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`, requestOptions )
-            .then((response) => response.json())
-            .then((data) => {
-              setUser(data);
-              localStorage.setItem('user', JSON.stringify(data));
-              alert('Successfully added to/deleted from favorites')
-              window.location.reload();
-            })
-            .catch((e) => {
-              alert('Something went wrong');
-            });
-        };
-
+const deleteFavoriteMovie = async() => {
+  const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${user.username}/movies/${movie.id}`,
+  {      method: 'DELETE',
+         headers: {
+            Authorization: `Bearer ${token}`,
+                           'Content-Type': 'application/json',
+  }
+})
+  const response = await favoriteMovie.json()
+  if(response) {
+    localStorage.setItem('user', JSON.stringify(response));
+    alert('Successfully deleted')
+    window.location.reload();
+  } else {
+    alert('Something went wrong')
+  }
+}
+  
     return (
         <>
-        <Button variant='primary' onClick={() => toggleFavorite()}> Favorite/Not favorite </Button>
+        <Button variant='primary' onClick={() => addFavoriteMovie}> Favorite </Button>
+        <Button variant='primary' onClick={() => deleteFavoriteMovie}> Not Favorite </Button>
         </>
     )}

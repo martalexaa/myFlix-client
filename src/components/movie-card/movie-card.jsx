@@ -17,7 +17,6 @@ export const MovieCard = ({ movie }) => {
           <Button variant="link">Open</Button>
         </Link>
 
-
         </Card.Body>
       </Card>
     );

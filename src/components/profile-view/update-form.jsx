@@ -17,12 +17,14 @@ export const UpdateForm = ({ storedToken, storedUser }) => {
 
 
     const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
+      method: 'PUT',
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser) {
           setUser(updatedUser);
+          console.log(updatedUser)
           localStorage.setItem('user', JSON.stringify(updatedUser));
           window.location.reload();
         }

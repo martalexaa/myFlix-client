@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MovieCard } from '../movie-card/movie-card';
 import { UpdateForm } from './update-form';
 import { DeleteUser } from './delete-user';
+import Button from "react-bootstrap/Button";
 
   export const ProfileView = ({ user, movies }) => {
 
@@ -16,12 +17,47 @@ useEffect(() => {
     }
   }, []);
   
-//The code below defines two constants favMovies and favMoviesList. favMovies is assigned the value of userData.
-//FavoriteMovies if it exists, or an empty array [] if it does not exist (using the "nullish coalescing operator" ??). 
-//favMoviesList is then assigned a filtered list of movies from movies where the movie's id is included in favMovies. 
-//If favMovies has a length of zero (favMovies.length !== 0), favMoviesList is assigned an empty array [].
+
   const favMovies = userData.FavoriteMovies ?? [];
   const favMoviesList = favMovies && favMovies.length !== 0 ? movies.filter((m) => favMovies.includes(m.id)) : [];
+
+
+  const addFavoriteMovie = async() => {
+    const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${userData.Username}/movies/${movie.id}`,
+    {      method: 'POST',
+           headers: {
+              Authorization: `Bearer ${storedToken}`,
+                             'Content-Type': 'application/json',
+    }
+  })
+    const response = await favoriteMovie.json()
+    setUserFavoriteMovies(response.FavoriteMovies)
+    if(response) {
+      localStorage.setItem('user', JSON.stringify(response));
+      alert('Successfully added')
+      window.location.reload();
+    } else {
+      alert('Something went wrong')
+    }
+  }
+  
+  const deleteFavoriteMovie = async() => {
+    const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${userData.Username}/movies/${movie.id}`,
+    {      method: 'DELETE',
+           headers: {
+              Authorization: `Bearer ${storedToken}`,
+                             'Content-Type': 'application/json',
+    }
+  })
+    const response = await favoriteMovie.json()
+    if(response) {
+      localStorage.setItem('user', JSON.stringify(response));
+      alert('Successfully deleted')
+      window.location.reload();
+    } else {
+      alert('Something went wrong')
+    }
+  }
 
     
     return (
@@ -43,6 +79,7 @@ useEffect(() => {
                     {favMoviesList.map((movie) => (
                       <div key={movie.id}>
                         <MovieCard movie={movie}  user={user}/>
+                        <Button variant='primary' onClick={() => deleteFavoriteMovie}> Not Favorite </Button>
                       </div>
                     ))}
                   </>
