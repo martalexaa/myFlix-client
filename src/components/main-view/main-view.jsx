@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 
 import { MovieCard } from "../movie-card/movie-card";
@@ -106,7 +107,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <ProfileView user={user} movies={movies}/>
+                    <ProfileView user={user} movies={movies} token={token} />
                   </Col>
                 )}
               </>
@@ -142,7 +143,9 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard movie={movie} 
+                        user={user}
+                        token={token} />
                       </Col>
                     ))}
                   </>

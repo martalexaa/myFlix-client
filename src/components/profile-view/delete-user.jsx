@@ -2,7 +2,7 @@
 
 import { Button } from 'react-bootstrap';
 
-export const DeleteUser = ({ storedToken, storedUser }) => {
+export const DeleteUser = ({ token, user }) => {
   
   const handleDeregister = (username) => {
     const userWarning = confirm(
@@ -16,7 +16,7 @@ export const DeleteUser = ({ storedToken, storedUser }) => {
           {
             method: 'DELETE',
             headers: {
-              Authorization: `Bearer ${storedToken}`,
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
           }
@@ -36,7 +36,7 @@ export const DeleteUser = ({ storedToken, storedUser }) => {
   return (
       <div>
         <Button
-          onClick={() => handleDeregister(storedUser.Username)}
+          onClick={() => handleDeregister(user.Username)}
           className='delete-button'
           variant='danger'
         >

@@ -5,26 +5,25 @@ import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-export const UpdateForm = ({ storedToken, storedUser }) => {
+export const UpdateForm = ({ token, user }) => {
 
-  const [token, setToken] = useState(storedToken ? storedToken : null);
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-
+  const origUsername = {...user}; //original user's username (before update)
+  
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState();
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday);
 
 
-    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
+    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
       method: 'PUT',
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser) {
-          setUser(updatedUser);
-          console.log(updatedUser)
+          //setUser(updatedUser);
+          //console.log(updatedUser)
           localStorage.setItem('user', JSON.stringify(updatedUser));
           window.location.reload();
         }

@@ -6,7 +6,7 @@ import { FavoriteButton } from "./favorite-button";
 
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, user, token }) => {
     return (
       <Card bg="dark" text="white" className="h-100">
         <Card.Img variant="top" src={movie.image}/>
@@ -16,7 +16,7 @@ export const MovieCard = ({ movie }) => {
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
           <Button variant="link">Open</Button>
         </Link>
-
+        <FavoriteButton movie={movie} user={user} token={token} />
         </Card.Body>
       </Card>
     );
