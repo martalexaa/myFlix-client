@@ -46984,11 +46984,12 @@ const UpdateForm = ({ token , user  })=>{
     const origUsername = {
         ...user
     }; //original user's username (before update)
+    //update password is working, update username is not working
     const [username, setUsername] = (0, _react.useState)(user.Username);
     const [password, setPassword] = (0, _react.useState)();
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
-    const updateUser = (username)=>{
+    const updateUser = (user)=>{
         fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
             method: "PUT",
             headers: {
@@ -47038,7 +47039,7 @@ const UpdateForm = ({ token , user  })=>{
                     children: "Update my data"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 74,
+                    lineNumber: 76,
                     columnNumber: 13
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47048,7 +47049,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Username:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 76,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47059,13 +47060,13 @@ const UpdateForm = ({ token , user  })=>{
                             minLength: "3"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 77,
+                            lineNumber: 79,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 75,
+                    lineNumber: 77,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47075,7 +47076,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Password:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 87,
+                            lineNumber: 89,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47085,13 +47086,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 88,
+                            lineNumber: 90,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 86,
+                    lineNumber: 88,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47101,7 +47102,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Email:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 97,
+                            lineNumber: 99,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47111,13 +47112,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 98,
+                            lineNumber: 100,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 96,
+                    lineNumber: 98,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47127,7 +47128,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Birthday:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 107,
+                            lineNumber: 109,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47137,13 +47138,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 108,
+                            lineNumber: 110,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 106,
+                    lineNumber: 108,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -47152,13 +47153,13 @@ const UpdateForm = ({ token , user  })=>{
                     children: "Submit"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 116,
+                    lineNumber: 118,
                     columnNumber: 11
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/update-form.jsx",
-            lineNumber: 73,
+            lineNumber: 75,
             columnNumber: 11
         }, undefined)
     }, void 0, false);

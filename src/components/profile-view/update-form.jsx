@@ -8,14 +8,16 @@ import Form from "react-bootstrap/Form";
 export const UpdateForm = ({ token, user }) => {
 
   const origUsername = {...user}; //original user's username (before update)
-  
+
+  //update password is working, update username is not working
+
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState();
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday);
 
 
-    const updateUser = (username) => {fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
+    const updateUser = (user) => {fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
       method: 'PUT',
       headers: { Authorization: `Bearer ${token}` },
     })
