@@ -5,21 +5,8 @@ import { Card, Row, Col } from "react-bootstrap";
 
   export const ProfileView = ({ user, movies, token }) => {
 
-    //const storedToken = localStorage.getItem("token");
-    //const storedUser = localStorage.getItem("user");
-    //const [userData, setUserData] = useState({});
-
-// useEffect(() => {
-//     const storedUser = localStorage.getItem("user");
-//     if (storedUser) {
-//       setUserData(JSON.parse(storedUser));
-//     }
-//   }, []);
-  
-
   const favMovies = user.FavoriteMovies ?? [];
   const favMoviesList = favMovies && favMovies.length !== 0 ? movies.filter((m) => favMovies.includes(m.id)) : [];
-
 
     
     return (
