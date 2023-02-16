@@ -101,6 +101,8 @@ export const UpdateForm = ({ token, user }) => {
             />
           </Form.Group>
 
+          <br />
+
           <Button variant="primary" type="submit">
             Submit
           </Button>

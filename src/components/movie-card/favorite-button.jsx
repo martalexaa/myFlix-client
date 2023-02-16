@@ -6,40 +6,54 @@ import Button from "react-bootstrap/Button";
 
 export const FavoriteButton = ({ movie, user, token}) => {
 
-const addFavoriteMovie = async() => {
-  const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
+const addFavoriteMovie = () => {
+  fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
   {      method: 'POST',
          headers: {
             Authorization: `Bearer ${token}`,
                            'Content-Type': 'application/json',
   }
 })
-  const response = favoriteMovie.json()
-  console.log(favoriteMovie)
-  if(response) {
-    localStorage.setItem('user', JSON.stringify(response));
-    alert('Successfully added')
+
+
+  .then ((response) => {
+  if (response.ok) {
+    return response.json();
   } else {
     alert('Something went wrong')
   }
-}
+})
+  .then((updatedUser) => {
+    if(!updatedUser) return;
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    alert("Successfully added to favorites");
+    window.location.reload();
+})
+};
 
-const deleteFavoriteMovie = async() => {
-  const favoriteMovie =  await fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
+
+const deleteFavoriteMovie = () => {
+  fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
   {      method: 'DELETE',
          headers: {
             Authorization: `Bearer ${token}`,
                            'Content-Type': 'application/json',
   }
 })
-  const response = await favoriteMovie.json()
-  if(response) {
-    localStorage.setItem('user', JSON.stringify(response));
-    alert('Successfully deleted')
+.then ((response) => {
+  if (response.ok) {
+    return response.json();
   } else {
     alert('Something went wrong')
   }
-}
+})
+  .then((updatedUser) => {
+    if(!updatedUser) return;
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    alert("Successfully deleted from favorites")
+    window.location.reload();
+})
+};
   
     return (
         <>

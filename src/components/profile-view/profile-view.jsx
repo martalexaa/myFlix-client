@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { MovieCard } from '../movie-card/movie-card';
 import { UpdateForm } from './update-form';
 import { DeleteUser } from './delete-user';
-import Button from "react-bootstrap/Button";
+import { Card, Row, Col } from "react-bootstrap";
 
   export const ProfileView = ({ user, movies, token }) => {
 
@@ -25,31 +24,39 @@ import Button from "react-bootstrap/Button";
     
     return (
         <>
-      <div>
-    <h2>My profile</h2>
-      </div>
-      <div>
-        <p>Username: {user.Username}</p>
-        <p>Email: {user.Email} </p>
-        <p>Birthday: {user.Birthday}</p>
-        <br />
-        <h3>My Favorite Movies: </h3>
+    <div className='text-center h1 mb-4' >My Profile</div>
+    <Card>
+    <div className='text-start h2 mb-4'>My Data</div>
+      <Card.Text>Username: {user.Username}</Card.Text>
+      <Card.Text>Email: {user.Email} </Card.Text>
+      <Card.Text>Birthday: {user.Birthday}</Card.Text>
+    </Card>
+
+    <br />
+    
+    <UpdateForm token={token} user={user}/>
+
+    <br />
+
+    <DeleteUser token={token} user={user}/>
+
+    <br />
         
-        {favMoviesList.length === 0 ? (
-                  <div>The list is empty!</div>
+     <Row>
+      <div className='text-start h2 mb-4'>My Favorite Movies: </div>
+      {favMoviesList.length === 0 ? (
+                  <Col>The list is empty!</Col>
                 ) : (
                   <>
                     {favMoviesList.map((movie) => (
-                      <div key={movie.id}>
+                      <Col md={4} className='mb-4' key={movie.id}>
                         <MovieCard movie={movie}  user={user} token={token} />
-                      </div>
+                      </Col>
                     ))}
                   </>
                 )}
-           <br/>
-        <UpdateForm token={token} user={user}/>
-        <DeleteUser token={token} user={user}/>
-      </div>
+     </Row>
+
       </>
     );
   };
