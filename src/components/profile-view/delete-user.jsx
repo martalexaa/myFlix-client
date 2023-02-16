@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 export const DeleteUser = ({ token, user }) => {
   
-  const handleDeregister = (username) => {
+  const handleDeregister = () => {
     const userWarning = confirm(
       `You are going to delete your account. All information will be lost and cannot be recovered. Are you sure?`
     );
@@ -12,7 +12,7 @@ export const DeleteUser = ({ token, user }) => {
     userWarning === false
       ? alert('Great decision. Keep choosing your favorite movies')
       : fetch(
-          `https://martalexa-myflix.onrender.com/users/${username}`,
+          `https://martalexa-myflix.onrender.com/users/${user.Username}`,
           {
             method: 'DELETE',
             headers: {

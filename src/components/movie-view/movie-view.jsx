@@ -27,7 +27,6 @@ export const MovieView = ({ movies }) => {
 
         <Card.Footer>
           <Link to={`/`}><button className="back-button">Back</button></Link>
-          <Button>Love it</Button>
       </Card.Footer>
 
       </Card>

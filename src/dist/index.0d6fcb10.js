@@ -46317,31 +46317,22 @@ const MovieView = ({ movies  })=>{
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Footer, {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                        to: `/`,
-                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                            className: "back-button",
-                            children: "Back"
-                        }, void 0, false, {
-                            fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 29,
-                            columnNumber: 26
-                        }, undefined)
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                    to: `/`,
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        className: "back-button",
+                        children: "Back"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 29,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                        children: "Love it"
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 30,
-                        columnNumber: 11
+                        columnNumber: 26
                     }, undefined)
-                ]
-            }, void 0, true, {
+                }, void 0, false, {
+                    fileName: "src/components/movie-view/movie-view.jsx",
+                    lineNumber: 29,
+                    columnNumber: 11
+                }, undefined)
+            }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
                 lineNumber: 28,
                 columnNumber: 9
@@ -46984,28 +46975,10 @@ const UpdateForm = ({ token , user  })=>{
     const origUsername = {
         ...user
     }; //original user's username (before update)
-    //update password is working, update username is not working
     const [username, setUsername] = (0, _react.useState)(user.Username);
-    const [password, setPassword] = (0, _react.useState)();
+    const [password, setPassword] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday);
-    const updateUser = (user)=>{
-        fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
-            method: "PUT",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>response.json()).then((updatedUser)=>{
-            if (updatedUser) {
-                //setUser(updatedUser);
-                //console.log(updatedUser)
-                localStorage.setItem("user", JSON.stringify(updatedUser));
-                window.location.reload();
-            }
-        }).catch((error)=>{
-            console.log(error);
-        });
-    };
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
@@ -47015,7 +46988,7 @@ const UpdateForm = ({ token , user  })=>{
             Birthday: birthday
         };
         console.log(data);
-        fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
+        fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -47023,10 +46996,13 @@ const UpdateForm = ({ token , user  })=>{
                 "Content-Type": "application/json"
             }
         }).then((response)=>{
-            if (response.ok) {
-                alert("Changes saved");
-                updateUser(username);
-            } else alert("Something went wrong");
+            if (response.ok) return response.json();
+            else alert("Something went wrong");
+        }).then((updatedUser)=>{
+            if (!updatedUser) return;
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            alert("user info updated");
+            window.location.reload();
         }).catch((error)=>{
             console.log(error);
         });
@@ -47039,7 +47015,7 @@ const UpdateForm = ({ token , user  })=>{
                     children: "Update my data"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 76,
+                    lineNumber: 62,
                     columnNumber: 13
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47049,7 +47025,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Username:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 78,
+                            lineNumber: 64,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47060,13 +47036,13 @@ const UpdateForm = ({ token , user  })=>{
                             minLength: "3"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 79,
+                            lineNumber: 65,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 77,
+                    lineNumber: 63,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47076,7 +47052,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Password:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 89,
+                            lineNumber: 75,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47086,13 +47062,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 90,
+                            lineNumber: 76,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 88,
+                    lineNumber: 74,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47102,7 +47078,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Email:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 99,
+                            lineNumber: 85,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47112,13 +47088,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 100,
+                            lineNumber: 86,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 98,
+                    lineNumber: 84,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47128,7 +47104,7 @@ const UpdateForm = ({ token , user  })=>{
                             children: "Birthday:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 109,
+                            lineNumber: 95,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47138,13 +47114,13 @@ const UpdateForm = ({ token , user  })=>{
                             required: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-form.jsx",
-                            lineNumber: 110,
+                            lineNumber: 96,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 108,
+                    lineNumber: 94,
                     columnNumber: 11
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -47153,18 +47129,18 @@ const UpdateForm = ({ token , user  })=>{
                     children: "Submit"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/update-form.jsx",
-                    lineNumber: 118,
+                    lineNumber: 104,
                     columnNumber: 11
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/update-form.jsx",
-            lineNumber: 75,
+            lineNumber: 61,
             columnNumber: 11
         }, undefined)
     }, void 0, false);
 };
-_s(UpdateForm, "1hmHKwTFs8z7KPrRnA+MTy6eMa4=");
+_s(UpdateForm, "bBcKrDYcUz+moR7weoL+vPS2PEI=");
 _c = UpdateForm;
 var _c;
 $RefreshReg$(_c, "UpdateForm");
@@ -47188,9 +47164,9 @@ parcelHelpers.export(exports, "DeleteUser", ()=>DeleteUser);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactBootstrap = require("react-bootstrap");
 const DeleteUser = ({ token , user  })=>{
-    const handleDeregister = (username)=>{
+    const handleDeregister = ()=>{
         const userWarning = confirm(`You are going to delete your account. All information will be lost and cannot be recovered. Are you sure?`);
-        userWarning === false ? alert("Great decision. Keep choosing your favorite movies") : fetch(`https://martalexa-myflix.onrender.com/users/${username}`, {
+        userWarning === false ? alert("Great decision. Keep choosing your favorite movies") : fetch(`https://martalexa-myflix.onrender.com/users/${user.Username}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,

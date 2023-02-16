@@ -9,31 +9,12 @@ export const UpdateForm = ({ token, user }) => {
 
   const origUsername = {...user}; //original user's username (before update)
 
-  //update password is working, update username is not working
 
   const [username, setUsername] = useState(user.Username);
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday);
 
-
-    const updateUser = (user) => {fetch(`https://martalexa-myflix.onrender.com/users/${origUsername.Username}`, {
-      method: 'PUT',
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((updatedUser) => {
-        if (updatedUser) {
-          //setUser(updatedUser);
-          //console.log(updatedUser)
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -47,7 +28,7 @@ export const UpdateForm = ({ token, user }) => {
       console.log(data);
       
       fetch(
-        `https://martalexa-myflix.onrender.com/users/${username}`,
+        `https://martalexa-myflix.onrender.com/users/${origUsername.Username}`,
       {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -59,11 +40,16 @@ export const UpdateForm = ({ token, user }) => {
     )
       .then((response) => {
         if (response.ok) {
-          alert('Changes saved');
-          updateUser(username);
+          return response.json();
         } else {
           alert('Something went wrong');
         }
+      })
+      .then((updatedUser) => {
+        if(!updatedUser) return;
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        alert("user info updated");
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
