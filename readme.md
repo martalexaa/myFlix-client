@@ -5,6 +5,8 @@
 <p>The API and the database that I built earlier meet the information needs of the Movie App users. In this repository I created the interface they’ll use when making requests to—and receiving responses from—the server-side. The client-side of my app includes several interface views (built using the React library) that
 handle data through the (previously defined) REST API endpoints.</p>
 <p>The front-end and the back-end together form a complete web app built using full-stack JavaScript technologies known as MERN (MongoDB, Express, React, and Node.js).</p>
+<p>The Movie App was deployed on Netlify</p>
+<a href="https://martalexaa-movie-app.netlify.app/">OPEN THE APP ON NETLIFY</a>
 
 <h2>Blueprint and Techstack</h2>
 <ul>
