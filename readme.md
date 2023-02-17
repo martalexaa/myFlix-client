@@ -1,10 +1,11 @@
-<h1>Movie App<h1>
+<h1>Movie App</h1>
 
 <p>In this repository I built the client-side for my app based on its <a href="https://github.com/martalexaa/movie_api">existing server-side code</a>.</p>
 
 <p>The API and the database that I built earlier meet the information needs of the Movie App users. In this repository I created the interface they’ll use when making requests to—and receiving responses from—the server-side. The client-side of my app includes several interface views (built using the React library) that
 handle data through the (previously defined) REST API endpoints.</p>
 <p>The front-end and the back-end together form a complete web app built using full-stack JavaScript technologies known as MERN (MongoDB, Express, React, and Node.js).</p>
+  
 <h2>The 5 Ws</h2>
 <ol>
 <li> Who: The users of your myFlix app—movie enthusiasts who enjoy reading information about
