@@ -5,10 +5,11 @@ import Form from "react-bootstrap/Form";
 
 export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState(""); //for security reasons the password should be hashed here too!
 
         const handleSubmit = (event) => {event.preventDefault(); // prevent reloading the entire page
         const data = { Username: username, Password: password };
+
 
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",
@@ -19,7 +20,7 @@ export const LoginView = ({ onLoggedIn }) => {
           .then((data) => {
             console.log("Login response: ", data);
             if (data.user) {
-              localStorage.setItem("user", JSON.stringify(data.user)); // put user and token in local storage to stay logged in
+              localStorage.setItem("user", JSON.stringify(data.user)); // save user and token in local storage to stay logged in
               localStorage.setItem("token", data.token);
               onLoggedIn(data.user, data.token);  //send user and token to mainview
             } else {
@@ -30,6 +31,7 @@ export const LoginView = ({ onLoggedIn }) => {
             alert("Something went wrong");
           });
         };
+
 
         return (
           <Form onSubmit={handleSubmit}>
