@@ -52864,8 +52864,11 @@ const MoviesList = ()=>{
                 lineNumber: 22,
                 columnNumber: 9
             }, undefined) : filteredMovies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                    className: "mb-4",
-                    md: 3,
+                    className: "mb-5",
+                    xs: 12,
+                    sm: 6,
+                    md: 4,
+                    lg: 3,
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                         movie: movie
                     }, void 0, false, {
