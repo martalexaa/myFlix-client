@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setToken } from '../../redux/reducers/token';
 
+import { MoviesFilter } from '../movies-filter/movies-filter';
+import Col from 'react-bootstrap/Col';
+
 export const NavigationBar = () => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
@@ -50,6 +53,9 @@ export const NavigationBar = () => {
               </>
             )}
           </Nav>
+              <Col md={4}>
+                <MoviesFilter />
+              </Col>
         </Navbar.Collapse>
       </Container>
     </Navbar>

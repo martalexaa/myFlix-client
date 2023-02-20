@@ -48,11 +48,18 @@ export const MainView = () => {
           return {
             id: doc._id,
             title: doc.Title,
-            image: doc.ImagePath,
             description: doc.Description,
-            director: doc.Director.Name,
-            genre: doc.Genre.Name,
-            genre_description: doc.Genre.Description
+            genre: {
+              name: doc.Genre.Name,
+              description: doc.Genre.Description,
+            },
+            director: {
+              name: doc.Director.Name,
+              bio: doc.Director.Bio,
+              birth: doc.Director.Birth,
+              death: doc.Director.Death,
+            },
+            image: doc.ImagePath,
           };
         });
         dispatch(setMovies(moviesFromApi));
@@ -101,7 +108,7 @@ export const MainView = () => {
             }
           />
 
-<Route
+         <Route
             path="/profile"
             element={
               <>
