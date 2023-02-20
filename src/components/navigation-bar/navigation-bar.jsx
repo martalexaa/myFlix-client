@@ -1,11 +1,31 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { setToken } from '../../redux/reducers/token';
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+import { MoviesFilter } from '../movies-filter/movies-filter';
+import Col from 'react-bootstrap/Col';
+
+export const NavigationBar = () => {
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+
+  const onLoggedOut = () => {
+    dispatch(setUser(null));
+    dispatch(setToken(null));
+    localStorage.clear();
+  };
+
   return (
-    <Navbar bg="light" variant="light" expand="lg" className="mb-3" >
+    <Navbar 
+    expand='md'
+    bg='light'
+    variant='light'
+    sticky='top'
+    className='mb-4 py-3' >
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" className='h2'>
           Movies App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,6 +53,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
               </>
             )}
           </Nav>
+              <Col md={4}>
+                <MoviesFilter />
+              </Col>
         </Navbar.Collapse>
       </Container>
     </Navbar>

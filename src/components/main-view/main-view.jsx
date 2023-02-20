@@ -1,7 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { MovieCard } from "../movie-card/movie-card";
+import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from '../../redux/reducers/user';
+
+import { MoviesList } from "../movies-list/movies-list";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
@@ -12,11 +16,20 @@ import { Row, Button, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);
-  const [movies, setMovies] = useState([]);
+  //const storedUser = JSON.parse(localStorage.getItem("user"));
+  //const storedToken = localStorage.getItem("token");
+  //const [user, setUser] = useState(storedUser? storedUser : null);
+  //const [token, setToken] = useState(storedToken? storedToken : null);
+  //const [movies, setMovies] = useState([]);
+
+
+  const movies = useSelector((state) => state.movies.list);
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector(
+    (state) => state.token.token || localStorage.getItem('token')
+  );
+
+  const dispatch = useDispatch();
 
   //fetch movies from the database
   useEffect(() => {
@@ -35,33 +48,31 @@ export const MainView = () => {
           return {
             id: doc._id,
             title: doc.Title,
-            image: doc.ImagePath,
             description: doc.Description,
-            director: doc.Director.Name,
-            genre: doc.Genre.Name,
-            genre_description: doc.Genre.Description
+            genre: {
+              name: doc.Genre.Name,
+              description: doc.Genre.Description,
+            },
+            director: {
+              name: doc.Director.Name,
+              bio: doc.Director.Bio,
+              birth: doc.Director.Birth,
+              death: doc.Director.Death,
+            },
+            image: doc.ImagePath,
           };
         });
-        setMovies(moviesFromApi);
+        dispatch(setMovies(moviesFromApi));
       })
       .catch((error) => {
         console.log(error);
       });
   }, [token]);
 
-  //by passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
 
-   //if the user is not logged in, display LoginView or SignupView
    return (
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={() => {
-          setUser(null);
-          setToken(null); 
-          localStorage.clear()
-        }}
-      />
+      <NavigationBar />
 
     <Row className="justify-content-md-center"> 
 
@@ -90,14 +101,14 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView onLoggedIn={(user, token) => {setUser(user); setToken(token)}} />
+                    <LoginView />
                   </Col>
                 )}
               </>
             }
           />
 
-<Route
+         <Route
             path="/profile"
             element={
               <>
@@ -134,23 +145,7 @@ export const MainView = () => {
           <Route
             path="/"
             element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
-                ) : (
-                  <>
-                    {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} 
-                        user={user}
-                        token={token} />
-                      </Col>
-                    ))}
-                  </>
-                )}
-              </>
+              <>{!user ? <Navigate to='/login' replace /> : <MoviesList />}</>
             }
           />
      

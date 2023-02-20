@@ -1,36 +1,48 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Row, Col } from "react-bootstrap";
+import { useSelector } from 'react-redux';
 
 export const MovieView = () => {
-  const books = useSelector((state) => state.books)
+
+  const movies = useSelector((state) => state.movies.list);
 
   const { movieId } = useParams();  //the useParams hook extracts the movieId from the URL parameters (from the MainView: Route path="/movies/:movieId")
 
   const movie = movies.find((m) => m.id === movieId);
 
     return (
-      <Card bg="dark" text="white" style={{ width: "62rem" }}>
+      <Row className='d-flex flex-row-reverse p-3' >
+       <Col md={5} className='text-center text-md-end'>
+        <img src={movie.image} alt="movie poster" className='img-fluid h-100 w-auto movie-view-img' />
+        </Col>
 
-        <Card.Header><h2>{movie.title}</h2></Card.Header>
-      
-        <Card.Img src={movie.image} />
-      
-        <Card.Body>
+        <Col>
+          <div className="h2 h3-sm" > Title: {movie.title} </div>
 
-          <Card.Text> Director: {movie.director}</Card.Text>
+          <div className="h4 h5-sm text-muted"> Director: {movie.director.name}</div>
 
-          <Card.Text>Description: {movie.description}</Card.Text>
+          <div className='mt-md-5 mb-4'>
+          <div className='text-decoration-underline mb-2'>
+                  Description:{' '}
+                </div>
+                <span>{movie.description}</span>
+              </div>
 
-          <Card.Text>Genre:{movie.genre} ({movie.genre_description})</Card.Text>
+              <div className='mt-md-5 mb-4'>
+          <div className='text-decoration-underline mb-2'>
+                  Genre:{' '}
+                </div>
+                <span>{movie.genre.name} ({movie.genre.description})</span>
+              </div>
 
-        </Card.Body>
+          <Link to={`/`}>
+            <Button variant='secondary'>
+                Back
+            </Button></Link>
 
-        <Card.Footer>
-          <Link to={`/`}><button className="back-button">Back</button></Link>
-      </Card.Footer>
-
-      </Card>
+        </Col>
+      </Row>
     );
   };
   
