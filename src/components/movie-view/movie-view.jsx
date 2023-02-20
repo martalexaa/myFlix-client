@@ -1,9 +1,11 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
+import { useSelector } from 'react-redux';
 
 export const MovieView = () => {
-  const books = useSelector((state) => state.books)
+
+  const movies = useSelector((state) => state.movies.list);
 
   const { movieId } = useParams();  //the useParams hook extracts the movieId from the URL parameters (from the MainView: Route path="/movies/:movieId")
 

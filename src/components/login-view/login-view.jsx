@@ -1,19 +1,28 @@
 import React from "react";
 import {useState} from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button, Form } from "react-bootstrap";
 
-export const LoginView = ({ onLoggedIn }) => {
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { setToken } from "../../redux/reducers/token";
+
+export const LoginView = () => {
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState(""); //for security reasons the password should be hashed here too!
+    const [password, setPassword] = useState(""); 
+    const dispatch = useDispatch();
 
         const handleSubmit = (event) => {event.preventDefault(); // prevent reloading the entire page
-        const data = { Username: username, Password: password };
+        const data = { 
+          Username: username, 
+          Password: password 
+        };
 
 
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json" 
+          },
           body: JSON.stringify(data) // response with JSON object
         })
           .then((response) => response.json())
@@ -22,7 +31,9 @@ export const LoginView = ({ onLoggedIn }) => {
             if (data.user) {
               localStorage.setItem("user", JSON.stringify(data.user)); // save user and token in local storage to stay logged in
               localStorage.setItem("token", data.token);
-              onLoggedIn(data.user, data.token);  //send user and token to mainview
+              dispatch(setUser(data.user));
+              dispatch(setToken(data.token));
+
             } else {
               alert("No such user");
             }
@@ -44,6 +55,9 @@ export const LoginView = ({ onLoggedIn }) => {
               onChange={(e) => setUsername(e.target.value)}
               required
               minLength="3" 
+              pattern="^[A-Za-z0-9 .,'\-!?%&]+$"
+              title="Username should contain at least 3 characters: only contain letters, numbers and special characters"
+              placeholder="Enter your username"
             />
           </Form.Group>
     
@@ -54,6 +68,9 @@ export const LoginView = ({ onLoggedIn }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              pattern="^[A-Za-z0-9 .,'\-!?%&]+$"
+              title="Password may only contain letters, numbers and special characters"
+              placeholder="Enter your password"
             />
           </Form.Group>
           <Button variant="primary" type="submit">

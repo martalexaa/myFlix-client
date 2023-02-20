@@ -11,8 +11,8 @@ export const MovieCard = ({ movie, user, token }) => {
       <Card bg="dark" text="white" className="h-100">
         <Card.Img variant="top" src={movie.image}/>
           <Card.Body>
-            <Card.Title>{movie.title}</Card.Title>
-            <Card.Text>directed by {movie.director}</Card.Text>
+            <Card.Title className='mt-2'>{movie.title}</Card.Title>
+            <Card.Text className='mt-3'>directed by {movie.director}</Card.Text>
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
           <Button variant="link">Open</Button>
         </Link>
