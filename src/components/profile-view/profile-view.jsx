@@ -1,9 +1,17 @@
 import { MovieCard } from '../movie-card/movie-card';
 import { UpdateForm } from './update-form';
 import { DeleteUser } from './delete-user';
-import { Card, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-  export const ProfileView = ({ user, movies, token }) => {
+  export const ProfileView = () => {
+
+
+    const user = useSelector((state) => state.user.user);
+    const token = localStorage.getItem('token');
+    const movies = useSelector((state) => state.movies.list);
+  
 
   const favMovies = user.FavoriteMovies ?? [];
   const favMoviesList = favMovies && favMovies.length !== 0 ? movies.filter((m) => favMovies.includes(m.id)) : [];
@@ -12,20 +20,20 @@ import { Card, Row, Col } from "react-bootstrap";
     return (
         <>
     <div className='text-center h1 mb-4' >My Profile</div>
-    <Card>
+    <Container>
     <div className='text-start h2 mb-4'>My Data</div>
-      <Card.Text>Username: {user.Username}</Card.Text>
-      <Card.Text>Email: {user.Email} </Card.Text>
-      <Card.Text>Birthday: {user.Birthday}</Card.Text>
-    </Card>
+      <Row className="mb3" >Username: {user.Username}</Row>
+      <Row className="mb3">Email: {user.Email} </Row>
+      <Row className="mb5">Birthday: {user.Birthday}</Row>
+    </Container>
 
     <br />
     
-    <UpdateForm token={token} user={user}/>
+    <UpdateForm />
 
     <br />
 
-    <DeleteUser token={token} user={user}/>
+    <DeleteUser />
 
     <br />
         

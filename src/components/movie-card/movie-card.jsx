@@ -8,22 +8,33 @@ import "./movie-card.scss";
 
 export const MovieCard = ({ movie }) => {
     return (
-      <Card bg="dark" text="white" className="h-100">
-        <Card.Img variant="top" src={movie.image}/>
-          <Card.Body>
-            <Card.Title className='mt-2'>{movie.title}</Card.Title>
-            <Card.Text className='mt-3'>directed by {movie.director.name}</Card.Text>
-        <Row>
+      <Card bg="light" className="h-100">
+        <Row className='h-50'>
+          <Col className='h-100 text-center mt-3'>
+        <Card.Img 
+        variant="top" 
+        src={movie.image}
+        className='img-fluid h-100 w-auto movie-card-img'/>
+        </Col>
+        </Row>
+
+          <Card.Body className='d-flex flex-column'>
+            <Card.Title className='mt-5'>{movie.title}</Card.Title>
+            <Card.Text className='mt-3 text-muted font-italic'>{movie.genre.name}</Card.Text>
+            <Card.Text className='mt-3 text-muted'>Directed by {movie.director.name}</Card.Text>
+
+        <Row className='d-flex flex-row justify-content-between align-items-baseline mt-auto'>
         <Col className='text-start'>
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="secondary">Open</Button>
+          <Button variant="secondary" className='mt-auto'>Open</Button>
         </Link>
         </Col>
         <Col className='text-end'>
-        <FavoriteButton movie={movie} />
+        <FavoriteButton className='mt-auto' movie={movie} />
         </Col>
         </Row>
         </Card.Body>
+
       </Card>
     );
   };

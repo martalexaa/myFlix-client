@@ -1,8 +1,14 @@
 //back-end endpoint to delete user from the database app.delete('/users/:Username')
 
+import React from "react";
 import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
-export const DeleteUser = ({ token, user }) => {
+export const DeleteUser = () => {
+
+  const user = useSelector((state) => state.user.user);
+  const token = localStorage.getItem('token');
+
   
   const handleDeregister = () => {
     const userWarning = confirm(
