@@ -3,10 +3,22 @@
 //delete a new movie to user's favorite movies array: app.delete('/users/:Username/movies/:MovieID')
 
 import React from "react";
-import Button from "react-bootstrap/Button";
+import { Link } from 'react-router-dom';
+import Button from "react-bootstrap/Button"
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers/user';
 
+export const FavoriteButton = ({ movie }) => {
 
-export const FavoriteButton = ({ movie, user, token}) => {
+  const user = useSelector((state) => state.user.user);
+  const token = localStorage.getItem('token');
+
+  const dispatch = useDispatch();
+
+  const isFavorite = user.FavoriteMovies.find(
+    (favMovieId) => favMovieId === movie.id
+  );
 
 const addFavoriteMovie = () => {
   fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
@@ -25,11 +37,10 @@ const addFavoriteMovie = () => {
     alert('Something went wrong')
   }
 })
-  .then((updatedUser) => {
-    if(!updatedUser) return;
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+  .then((data) => {
+    if(!data) return;
+    dispatch(setUser(data));
     alert("Successfully added to favorites");
-    window.location.reload();
 })
 };
 
@@ -49,17 +60,27 @@ const deleteFavoriteMovie = () => {
     alert('Something went wrong')
   }
 })
-  .then((updatedUser) => {
-    if(!updatedUser) return;
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+  .then((data) => {
+    if(!data) return;
+    dispatch(setUser(data));
     alert("Successfully deleted from favorites")
-    window.location.reload();
 })
+};
+
+const toggleFavorite = () => {
+  if (isFavorite) {
+    deleteFavoriteMovie();
+  } else {
+    addFavoriteMovie();
+  }
 };
   
     return (
         <>
-        <Button variant='primary' onClick={addFavoriteMovie} > Favorite </Button>
-        <Button variant='primary' onClick={deleteFavoriteMovie}> Not Favorite </Button>
+            <Button variant="secondary"
+      onClick={() => toggleFavorite()}
+    >
+      {isFavorite ? 'Delete from favorites' : 'Add to favorites'}
+    </Button>
         </>
     )}

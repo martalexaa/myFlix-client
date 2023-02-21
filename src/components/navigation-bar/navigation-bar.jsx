@@ -48,14 +48,14 @@ export const NavigationBar = () => {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/profile">
                   Profile
-                </Nav.Link>
+              </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
-          </Nav>
-              <Col md={4}>
+          </Nav>  
+          <Col md={3}>
                 <MoviesFilter />
-              </Col>
+              </Col> 
         </Navbar.Collapse>
       </Container>
     </Navbar>
