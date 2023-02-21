@@ -1,6 +1,6 @@
 import React from "react";
 import {useState} from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
@@ -45,9 +45,10 @@ export const LoginView = () => {
 
 
         return (
+          <Container>
           <Form onSubmit={handleSubmit}>
             <h3>Log in</h3>
-          <Form.Group controlId="formUsername">
+          <Form.Group controlId="formUsername" className='mt-3'>
             <Form.Label>Username:</Form.Label>
             <Form.Control
               type="text"
@@ -61,7 +62,7 @@ export const LoginView = () => {
             />
           </Form.Group>
     
-          <Form.Group controlId="formPassword">
+          <Form.Group controlId="formPassword" className='mt-3'>
             <Form.Label>Password:</Form.Label>
             <Form.Control
               type="password"
@@ -73,9 +74,15 @@ export const LoginView = () => {
               placeholder="Enter your password"
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+
+          <Row className='text-end'>
+            <Col>
+          <Button variant="primary" type="submit" className='mt-3'>
             Submit
           </Button>
+          </Col>
+          </Row>
         </Form>
+       </Container> 
       );
     };
