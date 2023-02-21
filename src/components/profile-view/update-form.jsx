@@ -4,10 +4,16 @@ import React from "react";
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers/user';
 
-export const UpdateForm = ({ token, user }) => {
+export const UpdateForm = () => {
 
-  const origUsername = {...user}; //original user's username (before update)
+  const user = useSelector((state) => state.user.user);
+  const token = localStorage.getItem('token');
+
+  const dispatch = useDispatch();
 
 
   const [username, setUsername] = useState(user.Username);
@@ -28,7 +34,7 @@ export const UpdateForm = ({ token, user }) => {
       console.log(data);
       
       fetch(
-        `https://martalexa-myflix.onrender.com/users/${origUsername.Username}`,
+        `https://martalexa-myflix.onrender.com/users/${user.Username}`,
       {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -45,9 +51,9 @@ export const UpdateForm = ({ token, user }) => {
           alert('Something went wrong');
         }
       })
-      .then((updatedUser) => {
-        if(!updatedUser) return;
-        localStorage.setItem("user", JSON.stringify(updatedUser));
+      .then((data) => {
+        if(!data) return;
+        dispatch(setUser(data));
         alert("user info updated");
         window.location.reload();
       })

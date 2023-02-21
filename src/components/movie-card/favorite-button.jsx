@@ -77,7 +77,7 @@ const toggleFavorite = () => {
   
     return (
         <>
-            <Button variant="secondary"
+            <Button variant="secondary" size='sm' 
       onClick={() => toggleFavorite()}
     >
       {isFavorite ? 'Delete from favorites' : 'Add to favorites'}
