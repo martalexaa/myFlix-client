@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/reducers/user';
+import { setUser } from '../../redux/reducers/user'; 
 
 export const UpdateForm = () => {
 
