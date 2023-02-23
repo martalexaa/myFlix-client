@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/user';
+import { BsSuitHeartFill } from 'react-icons/bs';
+import { BsSuitHeart } from 'react-icons/bs';
 
 export const FavoriteButton = ({ movie }) => {
 
@@ -20,67 +22,71 @@ export const FavoriteButton = ({ movie }) => {
     (favMovieId) => favMovieId === movie.id
   );
 
-const addFavoriteMovie = () => {
-  fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
-  {      method: 'POST',
-         headers: {
-            Authorization: `Bearer ${token}`,
-                           'Content-Type': 'application/json',
-  }
-})
+  const addFavoriteMovie = () => {
+    fetch(`https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
 
 
-  .then ((response) => {
-  if (response.ok) {
-    return response.json();
-  } else {
-    alert('Something went wrong')
-  }
-})
-  .then((data) => {
-    if(!data) return;
-    dispatch(setUser(data));
-    alert("Successfully added to favorites");
-})
-};
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert('Something went wrong')
+        }
+      })
+      .then((data) => {
+        if (!data) return;
+        dispatch(setUser(data));
+        alert("Successfully added to favorites");
+      })
+  };
 
 
-const deleteFavoriteMovie = () => {
-  fetch( `https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
-  {      method: 'DELETE',
-         headers: {
-            Authorization: `Bearer ${token}`,
-                           'Content-Type': 'application/json',
-  }
-})
-.then ((response) => {
-  if (response.ok) {
-    return response.json();
-  } else {
-    alert('Something went wrong')
-  }
-})
-  .then((data) => {
-    if(!data) return;
-    dispatch(setUser(data));
-    alert("Successfully deleted from favorites")
-})
-};
+  const deleteFavoriteMovie = () => {
+    fetch(`https://martalexa-myflix.onrender.com/users/${user.Username}/movies/${movie.id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert('Something went wrong')
+        }
+      })
+      .then((data) => {
+        if (!data) return;
+        dispatch(setUser(data));
+        alert("Successfully deleted from favorites")
+      })
+  };
 
-const toggleFavorite = () => {
-  if (isFavorite) {
-    deleteFavoriteMovie();
-  } else {
-    addFavoriteMovie();
-  }
-};
-  
-    return (
-        <>
-            <Button variant="secondary" size='sm' 
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      deleteFavoriteMovie();
+    } else {
+      addFavoriteMovie();
+    }
+  };
+
+  return (
+
+    <Button variant="danger"
       onClick={() => toggleFavorite()}
+
     >
-      {isFavorite ? 'Delete from favorites' : 'Add to favorites'}
+      {isFavorite ? <BsSuitHeartFill  /> : <BsSuitHeart />}
     </Button>
-        </>
-    )}
+
+  )
+}

@@ -54,7 +54,7 @@ export const NavigationBar = () => {
             )}
           </Nav>  
           <Col md={3}>
-                <MoviesFilter />
+                {user && <MoviesFilter />}
               </Col> 
         </Navbar.Collapse>
       </Container>
