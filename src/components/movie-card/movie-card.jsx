@@ -34,7 +34,6 @@ export const MovieCard = ({ movie }) => {
         </Col>
         </Row>
         </Card.Body>
-
       </Card>
     );
   };
