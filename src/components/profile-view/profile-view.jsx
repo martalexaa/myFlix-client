@@ -22,9 +22,9 @@ import { useDispatch } from 'react-redux';
     <div className='text-center h1 mb-4' >My Profile</div>
     <Container>
     <div className='text-start h2 mb-4'>My Data</div>
-      <Row className="mb3" >Username: {user.Username}</Row>
-      <Row className="mb3">Email: {user.Email} </Row>
-      <Row className="mb5">Birthday: {user.Birthday}</Row>
+      <p className="mb-3" >Username: {user.Username}</p>
+      <p className="mb-3">Email: {user.Email} </p>
+      <p className="mb-5">Birthday: {user.Birthday}</p>
     </Container>
 
     <br />
@@ -35,6 +35,7 @@ import { useDispatch } from 'react-redux';
 
     <DeleteUser />
 
+    <br />
     <br />
         
      <Row>
