@@ -26,7 +26,7 @@ export const MovieCard = ({ movie }) => {
         <Row className='d-flex flex-row justify-content-between align-items-baseline mt-auto'>
         <Col className='text-start'>
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="secondary" className='mt-auto'>Open</Button>
+          <Button variant="btn btn-outline-secondary" className='mt-auto'>Open</Button>
         </Link>
         </Col>
         <Col className='text-end'>

@@ -37,7 +37,7 @@ export const MovieView = () => {
               </div>
 
           <Link to={`/`}>
-            <Button variant='secondary'>
+            <Button variant="btn btn-outline-secondary">
                 Back
             </Button></Link>
 
