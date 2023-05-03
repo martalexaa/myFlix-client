@@ -7,35 +7,35 @@ import { FavoriteButton } from "./favorite-button";
 import "./movie-card.scss";
 
 export const MovieCard = ({ movie }) => {
-    return (
-      <Card bg="light" className="h-100 shadow">
-        <Row className='h-50'>
-          <Col className='h-100 text-center mt-3'>
-        <Card.Img 
-        variant="top" 
-        src={movie.image}
-        className='img-fluid w-auto movie-card-img'
-        style={{height: '100%'}}/>
+  return (
+    <Card bg="light" className="h-100 shadow">
+      <Row className='h-50'>
+        <Col className='h-100 text-center mt-3'>
+          <Card.Img
+            variant="top"
+            src={movie.image}
+            className='img-fluid w-auto movie-card-img'
+            style={{ height: '100%' }} />
         </Col>
-        </Row>
+      </Row>
 
-          <Card.Body className='d-flex flex-column'>
-            <Card.Title className='mt-5'>{movie.title}</Card.Title>
-            <Card.Text className='mt-3 text-muted font-italic'>{movie.genre.name}</Card.Text>
-            <Card.Text className='mt-3 text-muted'>Directed by {movie.director.name}</Card.Text>
+      <Card.Body className='d-flex flex-column'>
+        <Card.Title className='mt-5'>{movie.title}</Card.Title>
+        <Card.Text className='mt-3 text-muted font-italic'>{movie.genre.name}</Card.Text>
+        <Card.Text className='mt-3 text-muted'>Directed by {movie.director.name}</Card.Text>
 
         <Row className='d-flex flex-row justify-content-between align-items-baseline mt-auto'>
-        <Col className='text-start'>
-        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="btn btn-outline-secondary" className='mt-auto'>Open</Button>
-        </Link>
-        </Col>
-        <Col className='text-end'>
-        <FavoriteButton className='mt-auto' movie={movie} />
-        </Col>
+          <Col className='text-start'>
+            <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+              <Button variant="btn btn-outline-secondary" className='mt-auto'>Open</Button>
+            </Link>
+          </Col>
+          <Col className='text-end'>
+            <FavoriteButton className='mt-auto' movie={movie} />
+          </Col>
         </Row>
-        </Card.Body>
-      </Card>
-    );
-  };
+      </Card.Body>
+    </Card>
+  );
+};
 

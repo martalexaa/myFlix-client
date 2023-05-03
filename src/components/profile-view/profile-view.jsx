@@ -22,29 +22,29 @@ export const ProfileView = () => {
     <>
       <div className='text-center h1 mb-4' >Hello {user.Username}!</div>
 
-      <div className='row pt-5' style={{width: '100%', padding: 0, margin: 0}}>
-        <div className='col-lg-4'>
+      <div className='row pt-5' style={{ width: '100%', padding: 0, margin: 0 }}>
+        <div className='col-lg-3'>
           <ProfileImage />
         </div>
-        <div className='col-lg-6'>
+        <div className='col-lg-7'>
           <UpdateForm />
         </div>
       </div>
 
       <h3 className='text-start mb-4 pt-5 mt-5'>Your Favorite Movies: </h3>
-      <Splide  options={{ 
-                            perPage: 2,
-                            arrows: true,
-                            pagination: false,
-                            drag: "free",
-                            gap: "1.5rem"
-                         }}>
+      <Splide options={{
+        perPage: 2,
+        arrows: true,
+        pagination: false,
+        drag: "free",
+        gap: "1.5rem"
+      }}>
         {favoriteMoviesList.length === 0 ? (
           <Col>The list is empty!</Col>
         ) : (
           <>
             {favoriteMoviesList.map((movie) => (
-              <SplideSlide md={4} className='mb-4' key={movie.id} style={{maxHeight: '600px'}}>
+              <SplideSlide md={4} className='mb-4' key={movie.id} style={{ maxHeight: '600px' }}>
                 <MovieCard movie={movie} user={user} token={token} />
               </SplideSlide>
             ))}

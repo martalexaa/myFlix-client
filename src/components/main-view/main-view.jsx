@@ -31,7 +31,7 @@ export const MainView = () => {
   //fetch movies from the database
   useEffect(() => {
 
-    if(!token) {
+    if (!token) {
       return;
     }
 
@@ -40,7 +40,7 @@ export const MainView = () => {
     })
 
       .then((response) => response.json())
-      .then((data) => { 
+      .then((data) => {
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
@@ -67,15 +67,15 @@ export const MainView = () => {
   }, [token]);
 
 
-   return (
+  return (
     <BrowserRouter>
       <NavigationBar />
 
-    <Row className="justify-content-md-center"> 
+      <Row className="justify-content-md-center">
 
-    <Routes>
+        <Routes>
 
-    <Route
+          <Route
             path="/signup"
             element={
               <>
@@ -105,7 +105,7 @@ export const MainView = () => {
             }
           />
 
-         <Route
+          <Route
             path="/profile"
             element={
               <>
@@ -145,9 +145,9 @@ export const MainView = () => {
               <>{!user ? <Navigate to='/login' replace /> : <MoviesList />}</>
             }
           />
-     
-     </Routes>
-     </Row>
+
+        </Routes>
+      </Row>
     </BrowserRouter>
- );
+  );
 };
