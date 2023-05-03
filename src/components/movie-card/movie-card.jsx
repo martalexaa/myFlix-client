@@ -8,13 +8,14 @@ import "./movie-card.scss";
 
 export const MovieCard = ({ movie }) => {
     return (
-      <Card bg="light" className="h-100">
+      <Card bg="light" className="h-100 shadow">
         <Row className='h-50'>
           <Col className='h-100 text-center mt-3'>
         <Card.Img 
         variant="top" 
         src={movie.image}
-        className='img-fluid h-100 w-auto movie-card-img'/>
+        className='img-fluid w-auto movie-card-img'
+        style={{height: '100%'}}/>
         </Col>
         </Row>
 

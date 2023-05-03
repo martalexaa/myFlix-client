@@ -1,10 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-
 import { setMovies } from "../../redux/reducers/movies";
-import { setUser } from '../../redux/reducers/user';
-
 import { MoviesList } from "../movies-list/movies-list";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";

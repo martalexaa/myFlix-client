@@ -1,58 +1,59 @@
 import { MovieCard } from '../movie-card/movie-card';
 import { UpdateForm } from './update-form';
 import { DeleteUser } from './delete-user';
+import { ProfileImage } from './profile-image';
 import { Container, Row, Col } from "react-bootstrap";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/splide/dist/css/splide.min.css';
 
-  export const ProfileView = () => {
+export const ProfileView = () => {
+
+  const user = useSelector((state) => state.user.user);
+  const movies = useSelector((state) => state.movies.list);
+  const token = useSelector((state) => state.token.token);
 
 
-    const user = useSelector((state) => state.user.user);
-    const token = localStorage.getItem('token');
-    const movies = useSelector((state) => state.movies.list);
-  
+  const favoriteMovies = user.FavoriteMovies ?? [];
+  const favoriteMoviesList = favoriteMovies?.length ? movies.filter((movie) => favoriteMovies.includes(movie.id)) : [];
 
-  const favMovies = user.FavoriteMovies ?? [];
-  const favMoviesList = favMovies && favMovies.length !== 0 ? movies.filter((m) => favMovies.includes(m.id)) : [];
 
-    
-    return (
-        <>
-    <div className='text-center h1 mb-4' >My Profile</div>
-    <Container>
-    <div className='text-start h2 mb-4'>My Data</div>
-      <p className="mb-3" >Username: {user.Username}</p>
-      <p className="mb-3">Email: {user.Email} </p>
-      <p className="mb-5">Birthday: {user.Birthday}</p>
-    </Container>
+  return (
+    <>
+      <div className='text-center h1 mb-4' >Hello {user.Username}!</div>
 
-    <br />
-    
-    <UpdateForm />
+      <div className='row pt-5' style={{width: '100%', padding: 0, margin: 0}}>
+        <div className='col-lg-4'>
+          <ProfileImage />
+        </div>
+        <div className='col-lg-6'>
+          <UpdateForm />
+        </div>
+      </div>
 
-    <br />
+      <h3 className='text-start mb-4 pt-5 mt-5'>Your Favorite Movies: </h3>
+      <Splide  options={{ 
+                            perPage: 2,
+                            arrows: true,
+                            pagination: false,
+                            drag: "free",
+                            gap: "1.5rem"
+                         }}>
+        {favoriteMoviesList.length === 0 ? (
+          <Col>The list is empty!</Col>
+        ) : (
+          <>
+            {favoriteMoviesList.map((movie) => (
+              <SplideSlide md={4} className='mb-4' key={movie.id} style={{maxHeight: '600px'}}>
+                <MovieCard movie={movie} user={user} token={token} />
+              </SplideSlide>
+            ))}
+          </>
+        )}
+      </Splide >
 
-    <DeleteUser />
+      <DeleteUser />
 
-    <br />
-    <br />
-        
-     <Row>
-      <div className='text-start h2 mb-4'>My Favorite Movies: </div>
-      {favMoviesList.length === 0 ? (
-                  <Col>The list is empty!</Col>
-                ) : (
-                  <>
-                    {favMoviesList.map((movie) => (
-                      <Col md={4} className='mb-4' key={movie.id}>
-                        <MovieCard movie={movie}  user={user} token={token} />
-                      </Col>
-                    ))}
-                  </>
-                )}
-     </Row>
-
-      </>
-    );
-  };
+    </>
+  );
+};

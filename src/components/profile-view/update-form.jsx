@@ -1,12 +1,10 @@
 // back-end endpoint to update user data app.put('/users/:Username')
 
 import React from "react";
-import {useState} from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/reducers/user'; 
+import { useState } from "react";
+import { Button, Form, Card, Row, Col } from "react-bootstrap";
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers/user';
 
 export const UpdateForm = () => {
 
@@ -22,19 +20,19 @@ export const UpdateForm = () => {
   const [birthday, setBirthday] = useState(user.Birthday);
 
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      const data = {
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday
-      };
-    
-      console.log(data);
-      
-      fetch(
-        `https://martalexa-myflix.onrender.com/users/${user.Username}`,
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    };
+
+    console.log(data);
+
+    fetch(
+      `https://martalexa-myflix.onrender.com/users/${user.Username}`,
       {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -52,7 +50,7 @@ export const UpdateForm = () => {
         }
       })
       .then((data) => {
-        if(!data) return;
+        if (!data) return;
         dispatch(setUser(data));
         alert("user info updated");
         window.location.reload();
@@ -62,57 +60,77 @@ export const UpdateForm = () => {
       });
   };
 
-        return (
-          <>
-          <Form onSubmit={handleSubmit}>
-            <h3>Update my data</h3>
-          <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              minLength="3" 
-            />
-          </Form.Group>
-    
-          <Form.Group controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
+  return (
+    <>
+    <div className='d-flex justify-content-center'>
+ <Card className='px-5 pt-5 mt-2 shadow border border-white align-items-left flex-center'>
+  <Form onSubmit={handleSubmit} className=''>
+    <div className='my-2 d-flex align-items-center'>
+      <div className='me-3' style={{ minWidth: '100px' }}>
+        <Form.Label className='mb-0'>Username:</Form.Label>
+      </div>
+      <div>
+        <Form.Control
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          minLength="3"
+        />
+      </div>
+    </div>
 
-          <Form.Group controlId="formEmail">
-            <Form.Label>Email:</Form.Label>
-            <Form.Control
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
+    <div className='my-2 d-flex align-items-center'>
+      <div className='me-3' style={{ minWidth: '100px' }}>
+        <Form.Label className='mb-0'>Password:</Form.Label>
+      </div>
+      <div>
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+    </div>
 
-          <Form.Group controlId="formBirthday">
-            <Form.Label>Birthday:</Form.Label>
-            <Form.Control
-              type="date"
-              value={birthday}
-              onChange={(e) => setBirthday(e.target.value)}
-              required
-            />
-          </Form.Group>
+    <div className='my-2 d-flex align-items-center'>
+      <div className='me-3' style={{ minWidth: '100px' }}>
+        <Form.Label className='mb-0'>Email:</Form.Label>
+      </div>
+      <div>
+        <Form.Control
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+    </div>
 
-          <br />
+    <div className='my-2 d-flex align-items-center'>
+      <div className='me-3' style={{ minWidth: '100px' }}>
+        <Form.Label className='mb-0'>Birthday:</Form.Label>
+      </div>
+      <div>
+        <Form.Control
+          type="date"
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+          required
+        />
+      </div>
+    </div>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-       </>
-      );
-    };
+  <div className='text-end'>
+    <Button variant="primary" type="submit" className='my-4'>
+      Update data
+    </Button>
+    </div>
+
+  </Form>
+</Card>
+</div>
+    </>
+  );
+};

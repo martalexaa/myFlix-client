@@ -9,7 +9,7 @@ export const MoviesFilter = () => {
   return (
     <Form.Control
       type='text'
-      placeholder='Search...'
+      placeholder='Start typing a title...'
       value={filter}
       onChange={(e) => dispatch(setFilter(e.target.value))}
     />

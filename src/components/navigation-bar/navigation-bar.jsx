@@ -1,11 +1,12 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setToken } from '../../redux/reducers/token';
 
 import { MoviesFilter } from '../movies-filter/movies-filter';
 import Col from 'react-bootstrap/Col';
+import './navigation-bar.css';
 
 export const NavigationBar = () => {
   const user = useSelector((state) => state.user.user);
@@ -17,6 +18,9 @@ export const NavigationBar = () => {
     localStorage.clear();
   };
 
+  const location = useLocation();
+  const activeLinkClass = "font-weight-bold text-primary";
+
   return (
     <Navbar 
     expand='md'
@@ -25,7 +29,7 @@ export const NavigationBar = () => {
     sticky='top'
     className='mb-4 py-3' >
       <Container>
-        <Navbar.Brand as={Link} to="/" className='h2'>
+        <Navbar.Brand as={Link} to="/" className='h1 logo'>
           Movie App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,29 +37,29 @@ export const NavigationBar = () => {
           <Nav className="me-auto">
             {!user && (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link as={Link} to="/login" className={location.pathname === '/login' ? activeLinkClass : ''}>
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link as={Link} to="/signup" className={location.pathname === '/signup' ? activeLinkClass : ''}>
                   Signup
                 </Nav.Link>
               </>
             )}
             {user && (
               <>
-                <Nav.Link as={Link} to="/">
+                <Nav.Link as={Link} to="/" className={location.pathname === '/' ? activeLinkClass : ''}>
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/profile">
+                <Nav.Link as={Link} to="/profile" className={location.pathname === '/profile' ? activeLinkClass : ''}>
                   Profile
               </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
           </Nav>  
-          <Col md={3}>
-                {user && <MoviesFilter />}
-              </Col> 
+            <Col md={3}>
+                   {location.pathname === '/' && user && <MoviesFilter />}
+            </Col> 
         </Navbar.Collapse>
       </Container>
     </Navbar>

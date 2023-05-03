@@ -1,7 +1,5 @@
-import React from "react";
 import {useState} from "react";
-import { Button, Form, Row, Col, Container } from "react-bootstrap";
-
+import { Button, Form, Row, Col, Container, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setToken } from "../../redux/reducers/token";
@@ -9,6 +7,7 @@ import { setToken } from "../../redux/reducers/token";
 export const LoginView = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState(""); 
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
         const handleSubmit = (event) => {event.preventDefault(); // prevent reloading the entire page
@@ -17,31 +16,32 @@ export const LoginView = () => {
           Password: password 
         };
 
+        setLoading(true);
 
         fetch("https://martalexa-myflix.onrender.com/login", {
           method: "POST",
-          headers: { 
-            "Content-Type": "application/json" 
+          headers: {
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data) // response with JSON object
+          body: JSON.stringify(data),
         })
           .then((response) => response.json())
           .then((data) => {
             console.log("Login response: ", data);
             if (data.user) {
-              localStorage.setItem("user", JSON.stringify(data.user)); // save user and token in local storage to stay logged in
+              localStorage.setItem("user", JSON.stringify(data.user));
               localStorage.setItem("token", data.token);
               dispatch(setUser(data.user));
               dispatch(setToken(data.token));
-
             } else {
               alert("No such user");
             }
           })
           .catch((e) => {
             alert("Something went wrong");
-          });
-        };
+          })
+          .finally(() => setLoading(false)); // stop loading animation
+      };
 
 
         return (
@@ -75,13 +75,19 @@ export const LoginView = () => {
             />
           </Form.Group>
 
-          <Row className='text-end'>
-            <Col>
-          <Button variant="primary" type="submit" className='mt-3'>
-            Submit
-          </Button>
+          <Row className="text-end">
+          <Col>
+            {loading ? ( // show loading animation while data is being loaded
+              <Button variant="primary" disabled className="mt-3">
+                <Spinner animation="border" size="sm" /> Loading...
+              </Button>
+            ) : (
+              <Button variant="primary" type="submit" className="mt-3">
+                Submit
+              </Button>
+            )}
           </Col>
-          </Row>
+        </Row>
         </Form>
        </Container> 
       );

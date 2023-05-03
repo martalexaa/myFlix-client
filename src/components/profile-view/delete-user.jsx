@@ -43,7 +43,7 @@ export const DeleteUser = () => {
       <div>
         <Button
           onClick={() => handleDeregister(user.Username)}
-          className='delete-button'
+          className='delete-button my-5'
           variant='danger'
         >
           Delete Account
