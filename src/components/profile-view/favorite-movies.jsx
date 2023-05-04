@@ -15,25 +15,33 @@ export const FavoriteMovies = () => {
   return (
     <>
       <h3 className='text-start mb-4 pt-5 mt-5'>Your Favorites: </h3>
-      <Splide options={{
-        perPage: 2,
-        arrows: true,
-        pagination: false,
-        drag: "free",
-        gap: "1.5rem"
-      }}>
-        {favoriteMoviesList.length === 0 ? (
-          <Col>The list is empty!</Col>
-        ) : (
-          <>
-            {favoriteMoviesList.map((movie) => (
-              <SplideSlide md={4} className='mb-4' key={movie.id} style={{ maxHeight: '600px' }}>
-                <MovieCard movie={movie} user={user} token={token} />
-              </SplideSlide>
-            ))}
-          </>
-        )}
-      </Splide >
+      <Splide
+  options={{
+    arrows: true,
+    pagination: false,
+    drag: "free",
+    perPage: 2,
+    gap: "1rem",
+    breakpoints: {
+      640: {
+        perPage: 1,
+        gap: "0.5rem",
+      }
+    },
+  }}
+>
+  {favoriteMoviesList.length === 0 ? (
+    <Col>The list is empty!</Col>
+  ) : (
+    <>
+      {favoriteMoviesList.map((movie) => (
+        <SplideSlide md={4} className='mb-4' key={movie.id} style={{ maxHeight: '600px' }}>
+          <MovieCard movie={movie} user={user} token={token} />
+        </SplideSlide>
+      ))}
+    </>
+  )}
+</Splide>
     </>
   )
 };
