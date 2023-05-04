@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Form, Row, Col, Spinner } from "react-bootstrap"
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
@@ -88,9 +88,15 @@ export const SignupView = () => {
         </Form.Group>
         <Row className='text-end'>
           <Col>
-            <Button variant="primary" type="submit" className='mt-3'>
-              Submit
-            </Button>
+            {loading ? ( // show loading animation while data is being loaded
+              <Button variant="primary" disabled className="mt-3">
+                <Spinner animation="border" size="sm" /> Loading...
+              </Button>
+            ) : (
+              <Button variant="primary" type="submit" className="mt-3">
+                Submit
+              </Button>
+            )}
           </Col>
         </Row>
       </Form>

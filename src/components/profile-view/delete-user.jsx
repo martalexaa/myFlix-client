@@ -1,14 +1,10 @@
-//back-end endpoint to delete user from the database app.delete('/users/:Username')
-
-import React from "react";
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 export const DeleteUser = () => {
 
   const user = useSelector((state) => state.user.user);
-  const token = localStorage.getItem('token');
-
+  const token = useSelector((state) => state.token.token);
   
   const handleDeregister = () => {
     const userWarning = confirm(
@@ -40,14 +36,19 @@ export const DeleteUser = () => {
   };
 
   return (
-      <div>
+      <>
+        <Col>
+        <Row>
+          <h6 className='mt-5 mb-2'>You no longer want to be registered for the Top Rated Movies?</h6>
         <Button
           onClick={() => handleDeregister(user.Username)}
-          className='delete-button my-5'
+          className='delete-button mb-5'
           variant='danger'
         >
           Delete Account
         </Button>
-      </div>
+        </Row>
+        </Col>
+      </>
   );
 };

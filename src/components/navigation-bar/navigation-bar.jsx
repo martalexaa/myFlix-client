@@ -30,7 +30,7 @@ export const NavigationBar = () => {
     className='mb-4 py-3' >
       <Container>
         <Navbar.Brand as={Link} to="/" className='h1 logo'>
-          Movie App
+          Top Rated Movies
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

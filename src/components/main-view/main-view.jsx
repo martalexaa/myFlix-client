@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMovies } from "../../redux/reducers/movies";
 import { MoviesList } from "../movies-list/movies-list";
@@ -9,16 +9,10 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view"
 
-import { Row, Button, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
-  //const storedUser = JSON.parse(localStorage.getItem("user"));
-  //const storedToken = localStorage.getItem("token");
-  //const [user, setUser] = useState(storedUser? storedUser : null);
-  //const [token, setToken] = useState(storedToken? storedToken : null);
-  //const [movies, setMovies] = useState([]);
-
 
   const movies = useSelector((state) => state.movies.list);
   const user = useSelector((state) => state.user.user);

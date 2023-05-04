@@ -1,8 +1,5 @@
-// back-end endpoint to update user data app.put('/users/:Username')
-
-import React from "react";
 import { useState } from "react";
-import { Button, Form, Card, Row, Col } from "react-bootstrap";
+import { Button, Form, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/user';
 
@@ -12,15 +9,13 @@ export const UpdateForm = () => {
   const token = useSelector(
     (state) => state.token.token || localStorage.getItem('token')
   );
-
   const dispatch = useDispatch();
 
 
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
-  const [birthday, setBirthday] = useState(user.Birthday);
-
+  const [birthday, setBirthday] = useState(user.Birthday ? new Date(user.Birthday).toISOString().substr(0, 10) : "");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -81,7 +76,6 @@ export const UpdateForm = () => {
                 />
               </div>
             </div>
-
             <div className='my-2 d-flex align-items-center'>
               <div className='me-3' style={{ minWidth: '100px' }}>
                 <Form.Label className='mb-0'>Password:</Form.Label>
@@ -95,7 +89,6 @@ export const UpdateForm = () => {
                 />
               </div>
             </div>
-
             <div className='my-2 d-flex align-items-center'>
               <div className='me-3' style={{ minWidth: '100px' }}>
                 <Form.Label className='mb-0'>Email:</Form.Label>
@@ -123,13 +116,11 @@ export const UpdateForm = () => {
                 />
               </div>
             </div>
-
             <div className='text-end'>
               <Button variant="primary" type="submit" className='my-4'>
                 Update data
               </Button>
             </div>
-
           </Form>
         </Card>
       </div>

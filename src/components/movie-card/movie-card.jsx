@@ -1,10 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FavoriteButton } from "./favorite-button";
-
-import "./movie-card.scss";
 
 export const MovieCard = ({ movie }) => {
   return (
@@ -39,3 +36,16 @@ export const MovieCard = ({ movie }) => {
   );
 };
 
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    director: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
+};

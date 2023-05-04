@@ -1,21 +1,14 @@
-//add the new fav movie to the favmovie array stored in localstorage then...
-//add a new movie to user's favorite movies array in the API: app.post('/users/:Username/movies/:MovieID') 
-//delete a new movie to user's favorite movies array: app.delete('/users/:Username/movies/:MovieID')
-
-import React from "react";
-import { Link } from 'react-router-dom';
 import Button from "react-bootstrap/Button"
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/user';
-import { BsSuitHeartFill } from 'react-icons/bs';
-import { BsSuitHeart } from 'react-icons/bs';
+import { BsSuitHeartFill, BsSuitHeart } from 'react-icons/bs';
 
 export const FavoriteButton = ({ movie }) => {
 
   const user = useSelector((state) => state.user.user);
-  const token = localStorage.getItem('token');
-
+  const token = useSelector(
+    (state) => state.token.token || localStorage.getItem('token')
+  );
   const dispatch = useDispatch();
 
   const isFavorite = user.FavoriteMovies.find(
@@ -80,13 +73,10 @@ export const FavoriteButton = ({ movie }) => {
   };
 
   return (
-
     <Button variant="danger"
       onClick={() => toggleFavorite()}
-
     >
       {isFavorite ? <BsSuitHeartFill  /> : <BsSuitHeart />}
     </Button>
-
   )
 }
