@@ -26,8 +26,6 @@ export const UpdateForm = () => {
       Birthday: birthday
     };
 
-    console.log(data);
-
     fetch(
       `https://martalexa-myflix.onrender.com/users/${user.Username}`,
       {

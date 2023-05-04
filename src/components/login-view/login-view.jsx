@@ -3,6 +3,7 @@ import { Button, Form, Row, Col, Container, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setToken } from "../../redux/reducers/token";
+import { Welcome } from "../welcome/welcome";
 
 export const LoginView = () => {
     const [username, setUsername] = useState("");
@@ -45,9 +46,10 @@ export const LoginView = () => {
 
 
         return (
+          <>
+          <Welcome />
           <Container>
           <Form onSubmit={handleSubmit}>
-            <h3>Log in</h3>
           <Form.Group controlId="formUsername" className='mt-3'>
             <Form.Label>Username:</Form.Label>
             <Form.Control
@@ -83,12 +85,13 @@ export const LoginView = () => {
               </Button>
             ) : (
               <Button variant="primary" type="submit" className="mt-3">
-                Submit
+                Log in
               </Button>
             )}
           </Col>
         </Row>
         </Form>
        </Container> 
+       </>
       );
     };

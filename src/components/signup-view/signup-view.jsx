@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Form, Row, Col, Spinner } from "react-bootstrap"
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
+import { Welcome } from "../welcome/welcome";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -43,9 +44,10 @@ export const SignupView = () => {
   };
 
   return (
+    <>
+    <Welcome />
     <Container>
       <Form onSubmit={handleSubmit}>
-        <h3>Sign up</h3>
         <Form.Group controlId="formUsername" className='mt-3'>
           <Form.Label>Username:</Form.Label>
           <Form.Control
@@ -94,12 +96,13 @@ export const SignupView = () => {
               </Button>
             ) : (
               <Button variant="primary" type="submit" className="mt-3">
-                Submit
+                Sign up
               </Button>
             )}
           </Col>
         </Row>
       </Form>
     </Container>
+    </>
   )
 };

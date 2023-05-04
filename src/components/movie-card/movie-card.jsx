@@ -5,7 +5,7 @@ import { FavoriteButton } from "./favorite-button";
 
 export const MovieCard = ({ movie }) => {
   return (
-    <Card bg="light" className="h-100 shadow">
+    <Card bg="light" className="shadow" style={{height: '600px'}}>
       <Row className='h-50'>
         <Col className='h-100 text-center mt-3'>
           <Card.Img

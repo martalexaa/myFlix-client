@@ -1,7 +1,7 @@
-@import "https://fonts.googleapis.com/css2?family=Dosis:wght@700&family=Lobster+Two:ital@1&family=Montserrat&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Dosis:wght@700&family=Lobster+Two:ital@1&family=Montserrat&family=Yesteryear&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Montserrat&display=swap";
 .logo {
-  font-family: Dosis, bold;
+  font-family: Yesteryear, cursive;
 }
 
 .splide__container {
